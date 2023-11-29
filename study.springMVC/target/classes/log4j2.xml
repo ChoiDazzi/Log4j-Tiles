@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="info" monitorInterval="30">
+    <!-- Properties는 해당 Configuration 파일에서 사용할 프로퍼티 -->
     <Properties>
-    	<SystemPropertyArbiter propertyName="spring.profiles.active" propertyValue="local">
-            <Property name="logPath">/svc/powernote</Property> 
+    	<SystemPropertyArbiter propertyName="env" propertyValue="local">
+            <Property name="logPath">/local/logFile</Property>
         </SystemPropertyArbiter>
-        <SystemPropertyArbiter propertyName="spring.profiles.active" propertyValue="prod">
-            <Property name="logPath">/home/svc/logs</Property> 
+        <SystemPropertyArbiter propertyName="spring.profiles.active" propertyValue="dev">
+            <Property name="logPath">/dev/logFile</Property>
         </SystemPropertyArbiter>
-        <Property name="BASE_DIR">./logs</Property>
-        <Property name="LOG_FORMAT">[%date{yyyy-MM-dd HH:mm:ss}] %level %logger{36}(%file:%line) - %msg%n</Property>
+        <Property name="LOG_FORMAT">
+            %style{%d{yyyy/MM/dd HH:mm:ss,SSS}}{cyan} %highlight{[%-5p]}{FATAL=bg_red, ERROR=red,
+            INFO=green, DEBUG=blue}  [%C] %style{[%t]}{yellow}- %m%n -
+        </Property>
     </Properties>
- 
     <Appenders>
+        <!--
+        [ Console Appender ]
+        Console에 system.out 으로 로그를 출력하는 Appender
+        - target : 출력 방식. 기본값은 SYSTEM_OUT, SYSTEM_ERR로 출력가능
+        -->
         <Console name="Console" target="SYSTEM_OUT" follow="true">
             <PatternLayout pattern="${LOG_FORMAT}"/>
         </Console>
- 
-         <RollingFile name="File"
-                     fileName="${logPath}/logfile.log"
-                     filePattern="${logPath}/logfile.%d{yyyyMMdd}.log">
+        <!--
+        [ RollingFile Appender ]
+        파일에 로그를 기록하고, 특정 기준에 따라 압축하여 저장하는 방식의 Appender
+        - policy: File Rolling Up 기준. 여러 Policy를 적용 가능
+        - DefaultRolloverStrategy: datetime 패턴과 파일패턴의 int값을 받아서 결정
+        -->
+         <RollingFile name="File" fileName="${logPath}/logfile.log" filePattern="${logPath}/logfile.%d{yyyyMMdd}.log">
             <PatternLayout pattern="${LOG_FORMAT}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
@@ -31,14 +41,17 @@
             </DefaultRolloverStrategy>
         </RollingFile>
     </Appenders>
- 
+    <!--
+    [Logger]
+    로깅을 직접 하는 요소입니다. 로거는 패키지 별로 설정
+    -->
     <Loggers>
         <Root level="INFO">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Root>
- 
-        <Logger name="com.pacakge.controller" level="DEBUG" additivity="false">
+
+        <Logger name="kr.letech.study" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Logger>

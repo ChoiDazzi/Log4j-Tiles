@@ -8,7 +8,7 @@
 	    <param-name>spring.profiles.active</param-name> 
 	    <param-value>local</param-value> 
 	</context-param>
-	
+
 	<!-- UTF-8 인코딩 설정 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -53,5 +53,6 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
 
 </web-app>
