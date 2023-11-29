@@ -38,7 +38,7 @@
             <AppenderRef ref="File"/>
         </Root>
  
-        <Logger name="com.pacakge.controller" level="DEBUG" additivity="false">
+        <Logger name="kr.letech.study" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Logger>
