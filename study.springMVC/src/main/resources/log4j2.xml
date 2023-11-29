@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="30">
+    <Properties>
+    	<SystemPropertyArbiter propertyName="spring.profiles.active" propertyValue="local">
+            <Property name="logPath">/svc/powernote</Property> 
+        </SystemPropertyArbiter>
+        <SystemPropertyArbiter propertyName="spring.profiles.active" propertyValue="prod">
+            <Property name="logPath">/home/svc/logs</Property> 
+        </SystemPropertyArbiter>
+        <Property name="BASE_DIR">./logs</Property>
+        <Property name="LOG_FORMAT">[%date{yyyy-MM-dd HH:mm:ss}] %level %logger{36}(%file:%line) - %msg%n</Property>
+    </Properties>
+ 
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_FORMAT}"/>
+        </Console>
+ 
+         <RollingFile name="File"
+                     fileName="${logPath}/logfile.log"
+                     filePattern="${logPath}/logfile.%d{yyyyMMdd}.log">
+            <PatternLayout pattern="${LOG_FORMAT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${logPath}">
+                    <IfFileName glob="*.log"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+ 
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+ 
+        <Logger name="com.pacakge.controller" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+    </Loggers>
+</Configuration>
