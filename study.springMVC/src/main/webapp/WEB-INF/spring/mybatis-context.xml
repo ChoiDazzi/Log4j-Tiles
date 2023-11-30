@@ -6,7 +6,7 @@
 						http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 	
 	<mybatis:scan base-package="kr.letech.study" annotation="org.apache.ibatis.annotations.Mapper" /> 
-    
+
     <!-- MapperScannerConfigurer 사용 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 	   <property name="basePackage" value="kr.letech.study" />

@@ -3,8 +3,8 @@
 <script>
 function fnLogin() {
 	var frm = document.getElementById("frm");
-	var username = document.getElementById("userId");
-	var password = document.getElementById("userPw");
+	var username = document.getElementById("username");
+	var password = document.getElementById("password");
 	
 	//id, pw validation ...
 	
@@ -13,7 +13,7 @@ function fnLogin() {
 </script>
 
 <form action="${CONTEXT_PATH}/login" method="post" id="frm" onsubmit="return fnLogin()">
-	<input type="text" name="userId" id="userId"/>
-	<input type="password" name="userPw" id="userPw"/>
+	<input type="text" name="username" id="username"/>
+	<input type="password" name="password" id="password"/>
 	<button>로그인</button>
 </form>

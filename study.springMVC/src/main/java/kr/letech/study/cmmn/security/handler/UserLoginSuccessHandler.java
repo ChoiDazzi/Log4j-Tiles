@@ -1,0 +1,40 @@
+package kr.letech.study.cmmn.security.handler;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * <pre>
+ *
+ * </pre>
+ *
+ * << 개정이력 >>
+ *
+ *  수정일      수정자		수정내용
+ *  ------------------------------------------------
+ *  2023-11-30  YSH			최초 생성
+ */
+@Component("userLoginSuccessHandler")
+@Slf4j
+public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
+
+	/**
+	 * @see AuthenticationSuccessHandler#onAuthenticationSuccess(HttpServletRequest, HttpServletResponse, Authentication)
+	 */
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+		log.debug(authentication.getDetails() + "");
+		response.sendRedirect("/");
+
+	}
+
+}

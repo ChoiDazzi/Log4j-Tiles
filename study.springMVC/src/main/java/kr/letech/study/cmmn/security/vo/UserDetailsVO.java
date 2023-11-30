@@ -1,9 +1,11 @@
 package kr.letech.study.cmmn.security.vo;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserDetailsVO implements UserDetails{
@@ -20,7 +22,14 @@ public class UserDetailsVO implements UserDetails{
 		this.password = password;
 	}
 
-	public void setAuthorities(List<GrantedAuthority> authorities) {
+	public void setAuthorities(List<String> authList) {
+
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+
+		for (int i = 0; i < authList.size(); i++) {
+			authorities.add(new SimpleGrantedAuthority(authList.get(i)));
+		}
+
 		this.authorities = authorities;
 	}
 
