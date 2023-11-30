@@ -2,10 +2,10 @@
 <Configuration status="info" monitorInterval="30">
     <!-- Properties는 해당 Configuration 파일에서 사용할 프로퍼티 -->
     <Properties>
-    	<SystemPropertyArbiter propertyName="spring.profiles.active" propertyValue="local">
+    	<SystemPropertyArbiter propertyName="logFile" propertyValue="local">
             <Property name="logPath">/local/logFile</Property>
         </SystemPropertyArbiter>
-        <SystemPropertyArbiter propertyName="spring.profiles.active" propertyValue="dev">
+        <SystemPropertyArbiter propertyName="logFile" propertyValue="dev">
             <Property name="logPath">/dev/logFile</Property>
         </SystemPropertyArbiter>
         <Property name="LOG_FORMAT">
@@ -46,14 +46,48 @@
     로깅을 직접 하는 요소입니다. 로거는 패키지 별로 설정
     -->
     <Loggers>
-        <Root level="INFO">
+        <Root level="info">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Root>
 
-        <Logger name="kr.letech.study" level="DEBUG" additivity="false">
+        <Logger name="kr.letech.study" level="info" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Logger>
+        
+        <Logger name="org.springframework.core" level="info">
+			<AppenderRef ref="Console"/>
+		</Logger>
+		
+		<Logger name="org.springframework.beans" level="info">
+			<AppenderRef ref="Console"/>
+		</Logger>
+		
+		<Logger name="org.springframework.context" level="info">
+			<AppenderRef ref="Console"/>
+		</Logger>
+	
+		<Logger name="org.springframework.web" level="info">
+			<AppenderRef ref="Console"/>
+		</Logger>
+		
+		<Logger name="jdbc.sqltiming" additivity="false" level="warn">
+			<appender-ref ref="Console"/> 
+		</Logger>
+		<Logger name="jdbc.sqlonly" level="info" additivity="false"> 
+			<appender-ref ref="Console"/> 
+			<AppenderRef ref="File"/>
+		</Logger>
+		<Logger name="jdbc.audit" level="warn" additivity="false"> 
+			<appender-ref ref="Console"/> 
+		</Logger> 
+		<Logger name="jdbc.resultset" level="warn" additivity="false">
+			<appender-ref ref="Console"/> 
+		</Logger>
+		<Logger name="jdbc.resultsettable" level="info" additivity="false"> 
+			<appender-ref ref="Console"/> 
+			<AppenderRef ref="File"/>
+		</Logger> 
     </Loggers>
 </Configuration>
