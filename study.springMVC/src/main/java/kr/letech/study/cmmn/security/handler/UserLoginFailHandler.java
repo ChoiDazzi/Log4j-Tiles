@@ -14,17 +14,6 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * <pre>
- *
- * </pre>
- *
- * << 개정이력 >>
- *
- *  수정일      수정자		수정내용
- *  ------------------------------------------------
- *  2023-11-30  YSH			최초 생성
- */
 @Component("userLoginFailHandler")
 @Slf4j
 public class UserLoginFailHandler implements AuthenticationFailureHandler {

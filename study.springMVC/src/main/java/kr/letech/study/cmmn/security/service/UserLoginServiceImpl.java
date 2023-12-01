@@ -4,10 +4,15 @@ import kr.letech.study.cmmn.security.UserMapper;
 import kr.letech.study.cmmn.security.vo.UserDetailsVO;
 import kr.letech.study.cmmn.security.vo.UserVO;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Locale;
+
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service("userLoginService")
@@ -22,7 +27,9 @@ public class UserLoginServiceImpl implements UserDetailsService{
 
 		UserVO userVO = userMapper.getUserInfo(userId);
 		if (userVO == null) {
-			return null;
+			Locale locale = LocaleContextHolder.getLocale();
+			String errMsg = this.messageSource.getMessage("msg.login.notFound", new String[] { userId }, locale);
+			throw new UsernameNotFoundException(errMsg);
 		} else {
 			userDetailsVO.setUsername(userVO.getUserId());
 			userDetailsVO.setPassword(userVO.getUserPw());
