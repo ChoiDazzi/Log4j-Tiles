@@ -25,13 +25,17 @@
     <beans:property name="suffix" value=".jsp" />
     <beans:property name="order" value="2" />
 	</beans:bean>
-	
+
 	<!-- tiles 설정 -->
 	<beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 	    <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	    <beans:property name="order" value="1" />
 	</beans:bean>
-	 
+
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSizePerFile" value="3145728"></beans:property>
+	</beans:bean>
+
 	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 	    <beans:property name="definitions">
 	        <beans:list>

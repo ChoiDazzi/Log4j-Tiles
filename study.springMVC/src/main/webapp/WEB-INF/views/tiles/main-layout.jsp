@@ -18,6 +18,7 @@
 		var RESOURCES_PATH = "${RESOURCES_PATH}";
 	</script>
 	<link rel="stylesheet" href="${RESOURCES_PATH}/css/common.css">
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <title><tiles:insertAttribute name="title" /></title>
   </head>
   

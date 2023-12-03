@@ -8,11 +8,17 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
+    /* select */
     List<BoardVO> getNavItems();
-
     String getNavNm(String boardId);
+    String getPostSeq();
+    List<PostVO> getAllPostByBoard(String boardId);
+    PostVO getPost(String postId);
 
+    /* insert */
     void insertPost(PostVO postVO);
 
-    String getPostSeq();
+    /* update */
+    void modifyPost(PostVO postVO);
+
 }

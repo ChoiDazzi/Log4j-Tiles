@@ -1,5 +1,7 @@
 package kr.letech.study.board.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import kr.letech.study.board.BoardMapper;
 import kr.letech.study.board.service.BoardService;
 import kr.letech.study.board.vo.BoardVO;
@@ -27,11 +29,29 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public PageInfo<PostVO> getAllPostByBoard(String boardId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<PostVO> posts = boardMapper.getAllPostByBoard(boardId);
+        return new PageInfo<>(posts);
+    }
+
+    @Override
+    public PostVO getPost(String postId) {
+        return boardMapper.getPost(postId);
+    }
+
+    @Override
     public void insertPost(PostVO postVO, String userId) {
         postVO.setUserId(userId);
         postVO.setRgstId(userId);
         postVO.setPostId(generatePostId(userId));
         boardMapper.insertPost(postVO);
+    }
+
+    @Override
+    public void modifyPost(PostVO postVO, String userId) {
+        postVO.setUpdtId(userId);
+        boardMapper.modifyPost(postVO);
     }
 
     public String getCurrentTime() {

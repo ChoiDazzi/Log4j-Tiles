@@ -14,6 +14,34 @@
          WHERE BOARD_ID = #{boardId}
     </select>
 
+    <select id="getAllPostByBoard" resultType="kr.letech.study.board.vo.PostVO" parameterType="string">
+        SELECT TP.POST_ID
+             , TP.USER_ID
+             , TU.USER_NM
+             , TP.POST_TTL
+             , TP.RGST_DT
+             , TP.UPDT_DT
+          FROM TB_POST TP
+         INNER JOIN TB_USER TU ON (TP.USER_ID = TU.USER_ID)
+         WHERE TP.BOARD_ID = #{boardId}
+           AND TP.DEL_YN = 'N'
+         ORDER BY RGST_DT DESC
+    </select>
+
+    <select id="getPost" resultType="kr.letech.study.board.vo.PostVO" parameterType="string">
+        SELECT TP.POST_ID
+             , TP.USER_ID
+             , TU.USER_NM
+             , TP.POST_TTL
+             , TP.POST_CNT
+             , TP.RGST_DT
+             , TP.UPDT_DT
+          FROM TB_POST TP
+         INNER JOIN TB_USER TU ON (TP.USER_ID = TU.USER_ID)
+         WHERE TP.POST_ID = #{postId}
+         ORDER BY RGST_DT DESC
+    </select>
+
     <select id="getPostSeq" resultType="string">
         select LPAD(NEXTVAL(POST_SEQ), 6, '0')
     </select>
@@ -32,4 +60,13 @@
                , #{postCnt}
                , #{rgstId})
     </insert>
+
+    <update id="modifyPost" parameterType="kr.letech.study.board.vo.PostVO">
+        UPDATE TB_POST
+           SET POST_TTL = #{postTtl}
+             , POST_CNT = #{postCnt}
+             , UPDT_DT = NOW()
+             , UPDT_ID = #{updtId}
+         WHERE POST_ID = #{postId}
+    </update>
 </mapper>

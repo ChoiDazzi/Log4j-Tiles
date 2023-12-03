@@ -13,6 +13,7 @@ public class PostVO {
     private String postId;
     private String boardId;
     private String userId;
+    private String userNm;
     private String postTtl;
     private String postCnt;
     private Timestamp rgstDt;

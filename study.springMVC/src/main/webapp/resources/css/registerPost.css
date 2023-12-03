@@ -14,4 +14,9 @@ input[name="rgstDt"] {
 input, textarea {
     width: 100%;
     border: none;
+    outline: none;
+}
+
+.btn-content {
+    display: flex;
 }

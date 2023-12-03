@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="/resources/css/board.css">
 <div class="wrapper">
     <div class="header-content">
@@ -16,14 +16,44 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <c:forEach items="${posts}" var="post" varStatus="status">
+                <tr>
+                    <td>${(pageInfo.pageNum-1) * 10 + status.count}</td>
+                    <td><a href="/board/detailPost/<c:out value="${boardId}"/>/<c:out value="${post.postId}"/>">${post.postTtl}</a></td>
+                    <td>${post.userNm}</td>
+                    <td>${post.rgstDt}</td>
+                </tr>
+            </c:forEach>
         </tbody>
     </table>
+    <div class="pagenation-content">
+        <nav class="pagenation">
+            <li>
+                <c:if test="${pageInfo.hasPreviousPage}">
+                    <a href="/board/board/${boardId}?pageNum=${pageInfo.prePage}" class="pageBtn pageTextBtn">Prev</a>
+                </c:if>
+            </li>
+
+            <c:forEach var="pageNum" begin="1" end="${pageInfo.pages}">
+                <li>
+                    <c:choose>
+                        <c:when test="${pageNum eq pageInfo.pageNum}">
+                            <span class="pageBtn active">${pageNum}</span>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="?pageNum=${pageNum}" class="pageBtn">${pageNum}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+            </c:forEach>
+
+            <li>
+                <c:if test="${pageInfo.hasNextPage}">
+                    <a href="/board/board/${boardId}?pageNum=${pageInfo.nextPage}" class="pageBtn pageTextBtn">Next</a>
+                </c:if>
+            </li>
+        </nav>
+    </div>
 </div>
 
 <script src="/resources/js/board.js"></script>

@@ -1,10 +1,10 @@
 .tb_board {
     width: 100%;
-
 }
 
 .tb_board th, .tb_board td {
     height: 25px;
+    text-align: center;
 }
 
 .tb_board th:first-child {
@@ -15,4 +15,40 @@
     width: 50%;
 }
 
+.pagenation-content {
+    width: 100%;
+    margin: auto;
+}
 
+.pagenation {
+    list-style: none;
+    margin: 25px;
+}
+
+.pagenation li {
+    float: left;
+    text-align: center;
+    line-height: 10px;
+    margin: 4px;
+}
+
+.pageBtn {
+    display: block;
+    width: 10px;
+    height: 10px;
+    text-decoration: none;
+    color: #333333;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #0573ff;
+    border-radius: 4px;
+}
+
+.active {
+    background: #0573ff;
+    color: #fff;
+}
+
+.pageTextBtn {
+    width: 30px;
+}
