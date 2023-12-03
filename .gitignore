@@ -267,3 +267,4 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,macos,windows,intellij,java
 /study.springMVC/study.springMVC/target/
+/study.springMVC/study.springMVC/
