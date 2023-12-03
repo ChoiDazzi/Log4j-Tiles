@@ -6,6 +6,7 @@
 }
 .wrap{
 	width: 100%;
+	height: 100vh;
 }
 
 .Header, .content, .Footer{
@@ -14,27 +15,46 @@
 }
 
 .Header, .Footer{
-	height: 8em;
+	height: 10%;
 }
 
 .SideBar{
-	width: 10%;
-	height: 600px;
-	background-color: #FFBB00;
+	width: 15%;
+	height: 100%;
+	background-color: #b0bfd3;
 	float: left;
 }
 
+.content {
+	height: 80%;
+}
+
 .page_content{
-	width: 90%;
+	width: 85%;
 	height: 600px;
-	background-color: #EAEAEA;
 	float: left;
 }
 
 .Header{
-	background-color: #ABF200;
+	background-color: #c5e5f6;
 }
 
 .Footer{
-	background-color: #FF00DD;
+	background-color: #9baec7;
+}
+
+.wrapper {
+	width: 90%;
+	margin: auto;
+}
+
+.header-content {
+	display: flex;
+	justify-content: space-between;
+	margin: 35px 0;
+}
+
+.tb {
+	border: 1px solid #6b6b6b;
+	border-collapse: collapse;
 }

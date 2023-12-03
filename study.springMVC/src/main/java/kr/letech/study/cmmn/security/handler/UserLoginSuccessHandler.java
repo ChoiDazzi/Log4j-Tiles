@@ -22,8 +22,6 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		log.debug(authentication.getDetails() + "");
-		response.sendRedirect("/");
-
+		response.sendRedirect("/board/board/b001");
 	}
-
 }

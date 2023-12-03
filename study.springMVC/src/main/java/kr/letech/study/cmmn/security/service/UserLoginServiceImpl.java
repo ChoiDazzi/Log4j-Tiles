@@ -38,4 +38,9 @@ public class UserLoginServiceImpl implements UserDetailsService{
 
 		return userDetailsVO;
 	}
+
+	public static void main(String[] args) {
+		BCryptPasswordEncoder bp = new BCryptPasswordEncoder();
+		System.out.println(bp.encode("123"));
+	}
 }

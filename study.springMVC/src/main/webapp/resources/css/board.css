@@ -1,0 +1,18 @@
+.tb_board {
+    width: 100%;
+
+}
+
+.tb_board th, .tb_board td {
+    height: 25px;
+}
+
+.tb_board th:first-child {
+    width: 5%;
+}
+
+.tb_board th:nth-child(2) {
+    width: 50%;
+}
+
+

@@ -16,7 +16,7 @@
 
 		<!-- 관리자페이지는 관리자만 접근 허용 -->
 		<s:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<s:intercept-url pattern="/files/**" access="permitAll" />
+<!--		<s:intercept-url pattern="/board/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />-->
 
 		<!-- 로그인 설정 -->
 		<s:form-login

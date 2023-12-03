@@ -1,0 +1,183 @@
+SET SESSION FOREIGN_KEY_CHECKS=0;
+
+/* Drop Tables */
+
+DROP TABLE IF EXISTS TB_CMNT;
+DROP TABLE IF EXISTS TB_POST;
+DROP TABLE IF EXISTS TB_BOARD;
+DROP TABLE IF EXISTS TB_FILE;
+DROP TABLE IF EXISTS TB_USERAUTH;
+DROP TABLE IF EXISTS TB_ROLE;
+DROP TABLE IF EXISTS TB_USER;
+
+
+
+
+/* Create Tables */
+
+CREATE TABLE TB_BOARD
+(
+    BOARD_ID varchar(20) NOT NULL,
+    BOARD_NM varchar(10) NOT NULL,
+    RGST_DT timestamp DEFAULT NOW() NOT NULL,
+    RGST_ID varchar(20),
+    UPDT_DT timestamp DEFAULT NOW() NOT NULL,
+    UPDT_ID varchar(20),
+    DEL_YN char(1) DEFAULT 'N' NOT NULL,
+    PRIMARY KEY (BOARD_ID)
+);
+
+
+CREATE TABLE TB_CMNT
+(
+    CMNT_ID varchar(20) NOT NULL,
+    POST_ID varchar(40) NOT NULL,
+    USER_ID varchar(20) NOT NULL,
+    CMNT_DTL varchar(100) NOT NULL,
+    RGST_DT timestamp DEFAULT NOW() NOT NULL,
+    RGST_ID varchar(20),
+    UPDT_DT timestamp DEFAULT NOW() NOT NULL,
+    UPDT_ID varchar(20),
+    DEL_YN char(1) DEFAULT 'N' NOT NULL,
+    PRIMARY KEY (CMNT_ID)
+);
+
+
+CREATE TABLE TB_FILE
+(
+    FILE_NO int NOT NULL,
+    POST_ID varchar(40) NOT NULL,
+    FILE_ORG_NM varchar(50),
+    FILE_SAVE_NM varchar(50),
+    FILE_SIZE int,
+    RGST_DT timestamp DEFAULT NOW() NOT NULL,
+    RGST_ID varchar(20),
+    UPDT_DT timestamp DEFAULT NOW() NOT NULL,
+    UPDT_ID varchar(20),
+    DEL_YN char(1) DEFAULT 'N' NOT NULL,
+    PRIMARY KEY (FILE_NO, POST_ID)
+);
+
+
+CREATE TABLE TB_POST
+(
+    POST_ID varchar(40) NOT NULL,
+    BOARD_ID varchar(20) NOT NULL,
+    USER_ID varchar(20) NOT NULL,
+    POST_TTL varchar(50) NOT NULL,
+    POST_CNT text NOT NULL,
+    RGST_DT timestamp DEFAULT NOW() NOT NULL,
+    RGST_ID varchar(20),
+    UPDT_DT timestamp DEFAULT NOW() NOT NULL,
+    UPDT_ID varchar(20),
+    DEL_YN char(1) DEFAULT 'N' NOT NULL,
+    PRIMARY KEY (POST_ID)
+);
+
+
+CREATE TABLE TB_ROLE
+(
+    ROLE_ID varchar(10) NOT NULL,
+    ROLE_NM varchar(9) NOT NULL,
+    RGST_DT timestamp DEFAULT NOW() NOT NULL,
+    RGST_ID varchar(20),
+    UPDT_DT timestamp DEFAULT NOW() NOT NULL,
+    UPDT_ID varchar(20),
+    DEL_YN char(1) DEFAULT 'N' NOT NULL,
+    PRIMARY KEY (ROLE_ID)
+);
+
+
+CREATE TABLE TB_USER
+(
+    USER_ID varchar(20) NOT NULL,
+    USER_NM varchar(5) NOT NULL,
+    USER_PW varchar(64) NOT NULL,
+    RGST_DT timestamp DEFAULT NOW() NOT NULL,
+    RGST_ID varchar(20),
+    UPDT_DT timestamp DEFAULT NOW() NOT NULL,
+    UPDT_ID varchar(20),
+    DEL_YN char(1) DEFAULT 'N' NOT NULL,
+    PRIMARY KEY (USER_ID)
+);
+
+
+CREATE TABLE TB_USERAUTH
+(
+    USER_ID varchar(20) NOT NULL,
+    ROLE_ID varchar(10) NOT NULL
+);
+
+
+
+/* Create Foreign Keys */
+
+ALTER TABLE TB_POST
+    ADD FOREIGN KEY (BOARD_ID)
+        REFERENCES TB_BOARD (BOARD_ID)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+;
+
+
+ALTER TABLE TB_CMNT
+    ADD FOREIGN KEY (POST_ID)
+        REFERENCES TB_POST (POST_ID)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+;
+
+
+ALTER TABLE TB_USERAUTH
+    ADD FOREIGN KEY (ROLE_ID)
+        REFERENCES TB_ROLE (ROLE_ID)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+;
+
+
+ALTER TABLE TB_CMNT
+    ADD FOREIGN KEY (USER_ID)
+        REFERENCES TB_USER (USER_ID)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+;
+
+
+ALTER TABLE TB_POST
+    ADD FOREIGN KEY (USER_ID)
+        REFERENCES TB_USER (USER_ID)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+;
+
+
+ALTER TABLE TB_USERAUTH
+    ADD FOREIGN KEY (USER_ID)
+        REFERENCES TB_USER (USER_ID)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+;
+
+INSERT INTO TB_BOARD(BOARD_ID, BOARD_NM) VALUES ('b001', '자유게시판');
+INSERT INTO TB_BOARD(BOARD_ID, BOARD_NM) VALUES ('b002', '커뮤니티');
+INSERT INTO TB_BOARD(BOARD_ID, BOARD_NM) VALUES ('b003', '이모저모');
+INSERT INTO TB_BOARD(BOARD_ID, BOARD_NM) VALUES ('b004', '서식자료실');
+commit ;
+
+insert into TB_USER (USER_ID, USER_NM, USER_PW) values ('a001', '신짱구', '$2a$10$NgpNkwDJQYB6ylOc3euq8ekL4hLKdu4Rpo30bUUt6d3tfMUd0RaXS');
+insert into TB_USER (USER_ID, USER_NM, USER_PW) values ('a002', '김철수', '$2a$10$NgpNkwDJQYB6ylOc3euq8ekL4hLKdu4Rpo30bUUt6d3tfMUd0RaXS');
+insert into TB_ROLE (ROLE_ID, ROLE_NM) values ('ROLE_ADMIN', '관리자');
+insert into TB_ROLE (ROLE_ID, ROLE_NM) values ('ROLE_USER', '사용자');
+insert into TB_USERAUTH (USER_ID, ROLE_ID) values ('a001', 'ROLE_ADMIN');
+insert into TB_USERAUTH (USER_ID, ROLE_ID) values ('a001', 'ROLE_USER');
+insert into TB_USERAUTH (USER_ID, ROLE_ID) values ('a002', 'ROLE_USER');
+
+create sequence post_seq
+    start with 1
+    increment by 1
+    maxvalue 999999
+    cycle;
+
+
+commit;

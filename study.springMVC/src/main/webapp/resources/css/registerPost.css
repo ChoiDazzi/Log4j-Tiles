@@ -1,0 +1,17 @@
+input[name="rgstDt"] {
+    outline: none;
+    border: none;
+}
+
+.tb_register {
+    width: 100%;
+}
+
+.tb_register tr {
+    height: 25px;
+}
+
+input, textarea {
+    width: 100%;
+    border: none;
+}
