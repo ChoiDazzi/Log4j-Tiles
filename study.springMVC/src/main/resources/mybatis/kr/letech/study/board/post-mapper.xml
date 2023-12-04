@@ -41,6 +41,23 @@
                , #{rgstId})
     </insert>
 
+    <insert id="insertFile" parameterType="kr.letech.study.board.vo.FileVO">
+        INSERT INTO TB_FILE ( FILE_ID
+                            , POST_ID
+                            , FILE_ORG_NM
+                            , FILE_SAVE_NM
+                            , FILE_SIZE
+                            , FILE_PATH
+                            , RGST_ID)
+        VALUES ( #{fileId}
+               , #{postId}
+               , #{fileOrgNm}
+               , #{fileSaveNm}
+               , #{fileSize}
+               , #{filePath}
+               , #{rgstId})
+    </insert>
+
     <update id="modifyPost" parameterType="kr.letech.study.board.vo.PostVO">
         UPDATE TB_POST
            SET POST_TTL = #{postTtl}

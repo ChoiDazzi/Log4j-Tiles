@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="form-content">
-    <form action="/post/registerPost" id="frm" method="post">
+    <form action="/post/registerPost" id="frm" method="post" enctype="multipart/form-data">
       <input type="hidden" name="boardId" value="${boardId}">
       <table border="1" class="tb tb_register">
         <tr>
@@ -26,6 +26,10 @@
         <tr>
           <td>날짜</td>
           <td>${currentTime}</td>
+        </tr>
+        <tr>
+          <td>첨부파일</td>
+          <td><input type="file" name="multiUpload" multiple></td>
         </tr>
         <tr>
           <td>내용</td>

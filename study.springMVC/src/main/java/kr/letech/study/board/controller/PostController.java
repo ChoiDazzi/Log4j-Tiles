@@ -1,24 +1,27 @@
 package kr.letech.study.board.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
+import kr.letech.study.board.service.impl.FileServiceImpl;
+import kr.letech.study.board.vo.FileVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import kr.letech.study.board.service.impl.PostServiceImpl;
 import kr.letech.study.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequiredArgsConstructor
 public class PostController {
 	
 	private final PostServiceImpl postService;
+	private final FileServiceImpl fileService;
+
 	@GetMapping("/post/registerPost/{boardId}")
 	public String registerPost(@PathVariable String boardId, Model model) {
 		model.addAttribute("boardId", boardId);
@@ -28,9 +31,12 @@ public class PostController {
 	}
 
 	@PostMapping("/post/registerPost")
-	public String registerPost(@ModelAttribute PostVO postVO, Principal principal) {
-		postService.insertPost(postVO, principal.getName());
-		return "redirect:/board/board/b001";
+	public String registerPost(@ModelAttribute PostVO postVO,
+							   @RequestParam("multiUpload") ArrayList<MultipartFile> files,
+							   Principal principal) {
+		List<FileVO> fileVOList = fileService.uploadFile(files);
+		postService.insertPost(postVO, principal.getName(), fileVOList);
+		return "redirect:/board/board/" + postVO.getBoardId();
 	}
 
 	@GetMapping("/post/detailPost/{boardId}/{postId}")

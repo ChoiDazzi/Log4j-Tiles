@@ -25,6 +25,11 @@ public class BoardController {
 		return boardService.getNavItems();
 	}
 
+	@GetMapping("/board/board")
+	public String getMain() {
+		return "board/boardMain.main";
+	}
+
 	@GetMapping("/board/board/{boardId}")
 	public String getBoard(@PathVariable String boardId,
 						   @RequestParam(defaultValue = "1") int pageNum,

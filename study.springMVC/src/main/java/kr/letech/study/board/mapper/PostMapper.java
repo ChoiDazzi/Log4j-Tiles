@@ -1,5 +1,6 @@
 package kr.letech.study.board.mapper;
 
+import kr.letech.study.board.vo.FileVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.letech.study.board.vo.PostVO;
@@ -17,4 +18,6 @@ public interface PostMapper {
     /* update */
     void modifyPost(PostVO postVO);
     void deletePost(String postId);
+
+    void insertFile(FileVO fileVO);
 }

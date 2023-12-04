@@ -2,7 +2,9 @@ package kr.letech.study.board.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import kr.letech.study.board.vo.FileVO;
 import org.springframework.stereotype.Service;
 
 import kr.letech.study.board.mapper.BoardMapper;
@@ -27,11 +29,16 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public void insertPost(PostVO postVO, String userId) {
+	public void insertPost(PostVO postVO, String userId, List<FileVO> fileVOList) {
 		postVO.setUserId(userId);
         postVO.setRgstId(userId);
         postVO.setPostId(generatePostId(userId));
-        postMapper.insertPost(postVO);
+		postMapper.insertPost(postVO);
+		for (FileVO fileVO : fileVOList) {
+			fileVO.setRgstId(userId);
+			fileVO.setPostId(postVO.getPostId());
+			postMapper.insertFile(fileVO);
+		}
 	}
 
 	@Override

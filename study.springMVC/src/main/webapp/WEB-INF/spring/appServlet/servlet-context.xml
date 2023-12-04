@@ -33,7 +33,7 @@
 	</beans:bean>
 
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSizePerFile" value="3145728"></beans:property>
+		<beans:property name="maxUploadSizePerFile" value="3145728" />
 	</beans:bean>
 
 	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
