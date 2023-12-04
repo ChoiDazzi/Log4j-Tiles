@@ -30,10 +30,8 @@ public class LoginController {
 	
 	@PostMapping("/signIn")
 	public String signIn(UserVO userVO, @RequestParam List<String> authId) {
-		System.out.println("userVO" + userVO);
-		System.out.println("authId = " + authId);
 		userLoginService.signIn(userVO, authId);
-		return "/login";
+		return "redirect:/login";
 	}
 	
 }

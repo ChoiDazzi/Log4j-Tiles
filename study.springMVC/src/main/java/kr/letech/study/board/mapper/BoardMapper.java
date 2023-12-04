@@ -11,6 +11,7 @@ public interface BoardMapper {
     /* select */
     List<BoardVO> getNavItems();
     List<PostVO> getAllPostByBoard(String boardId);
+    String getBoardSeq();
     
     /* update */
     void modifyBoard(BoardVO boardVO);

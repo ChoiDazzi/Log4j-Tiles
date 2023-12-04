@@ -50,12 +50,14 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/modifyBoard")
+	@ResponseBody
 	public void modifyBoard(BoardVO boardVO, Principal principal) {
 		boardService.modifyBoard(boardVO, principal.getName());
 	}
 
-	@PostMapping("/board/deleteBoard/{boardId}")
-	public void modifyBoard(@PathVariable String boardId, Principal principal) {
-		boardService.deleteBoard(boardId, principal.getName());
+	@PostMapping("/board/deleteBoard")
+	@ResponseBody
+	public void modifyBoard(String id, Principal principal) {
+		boardService.deleteBoard(id, principal.getName());
 	}
 }

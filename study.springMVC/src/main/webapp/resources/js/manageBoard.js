@@ -1,39 +1,34 @@
-let modifyBtns = document.querySelectorAll(".modifyBtn");
-let deleteBtns = document.querySelectorAll(".deleteBtn");
-modifyBtns.forEach((modifyBtn) => {
-	modifyBtn.addEventListener("click", () => {
-		let boardVO = {
-			"boardId": modifyBtn.getAttribute("data-id"),
-			"boardNm": modifyBtn.previousElementSibling.value
+fn_modifyBoard = (id) => {
+	let nm = document.querySelector(`input[data-id="${id}"]`).value;
+	let boardVO = {
+		"boardId": id,
+		"boardNm": nm
+	}
+	console.log(boardVO)
+	$.ajax({
+		url: '/board/modifyBoard',
+		type: 'post',
+		data: boardVO,
+		success: function() {
+			document.location.href = document.location.href;
+		},
+		error: function(xhr) {
+			console.log(xhr.status);
 		}
-		
-		$.ajax({
-			url: '/board/modifyBoard',
-			type: 'post',
-			data: boardVO,
-			success: function() {
-				window.location.href = "/board/manageBoard";
-			},
-			error: function(xhr) {
-				console.log(xhr.status);
-			}
-		});
 	});
-});
+}
 
-deleteBtns.forEach((deleteBtn) => {
-	deleteBtn.addEventListener("click", () => {
-		let boardId = deleteBtn.getAttribute("data-id");
-		console.log(`/board/deleteBoard/${boardId}`)
-		$.ajax({
-			url: `/board/deleteBoard/${boardId}`,
-			type: 'post',
-			success: function() {
-				window.location.href = "/board/manageBoard";
-			},
-			error: function(xhr) {
-				console.log(xhr.status);
-			}
-		});
+fn_deleteBoard = (id) => {
+	$.ajax({
+		url: `/board/deleteBoard`,
+		type: 'post',
+		data: "id="+id,
+		success: function() {
+			document.location.href = document.location.href;
+		},
+		error: function(xhr) {
+			console.log(xhr.status);
+		}
 	});
-});
+}
+

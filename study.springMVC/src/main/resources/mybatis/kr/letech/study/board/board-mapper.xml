@@ -23,6 +23,10 @@
          ORDER BY RGST_DT DESC
     </select>
 
+    <select id="getBoardSeq" resultType="string">
+        select LPAD(NEXTVAL(BOARD_SEQ), 4, '0')
+    </select>
+
     <update id="modifyBoard" parameterType="kr.letech.study.board.vo.BoardVO">
         UPDATE TB_BOARD
            SET BOARD_NM = #{boardNm}

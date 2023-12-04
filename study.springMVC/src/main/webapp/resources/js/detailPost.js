@@ -50,8 +50,9 @@ modifyBtn.addEventListener("click", () => {
 deleteBtn.addEventListener("click", () => {
     if (confirm("삭제하시겠습니까?")) {
         $.ajax({
-            url: `/post/deletePost/${postId}`,
+            url: `/post/deletePost`,
             type: 'post',
+            data: "postId="+postId,
             success: function() {
 				location.href = `/board/board/${boardId}`;
 			},

@@ -5,9 +5,9 @@
     <ul>
         <c:forEach items="${navItems}" var="navItem">
             <li style="list-style:none;">
-            	<input type="text" value="${navItem.boardNm}"/>
-            	<button onClick="fn_modifyBoard('<c:out value="${navItem.boardId}"/>')" type="button" class="modifyBtn" data-id='<c:out value="${navItem.boardId}"/>'>수정</button>
-            	<button type="button" class="deleteBtn" data-id='<c:out value="${navItem.boardId}"/>'>삭제</button>
+            	<input type="text" value="${navItem.boardNm}" data-id="<c:out value="${navItem.boardId}"/>"/>
+            	<button onclick="fn_modifyBoard('<c:out value="${navItem.boardId}"/>')" type="button">수정</button>
+            	<button onclick="fn_deleteBoard('<c:out value="${navItem.boardId}"/>')" type="button">삭제</button>
             </li>
         </c:forEach>
     </ul>

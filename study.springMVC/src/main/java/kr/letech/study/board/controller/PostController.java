@@ -47,8 +47,8 @@ public class PostController {
 	}
 
 	@ResponseBody
-	@PostMapping("/post/deletePost/{postId}")
-	public void deletePost(@PathVariable String postId) {
+	@PostMapping("/post/deletePost")
+	public void deletePost(String postId) {
 		postService.deletePost(postId);
 	}
 }

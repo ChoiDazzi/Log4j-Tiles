@@ -50,7 +50,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void insertBoard(String boardNm, String userId) {
 		BoardVO boardVO = new BoardVO();
-		boardVO.setBoardId(UUID.randomUUID().toString());
+		boardVO.setBoardId("b" + boardMapper.getBoardSeq());
 		boardVO.setBoardNm(boardNm);
 		boardVO.setUpdtId(userId);
 		boardMapper.insertBoard(boardVO);
