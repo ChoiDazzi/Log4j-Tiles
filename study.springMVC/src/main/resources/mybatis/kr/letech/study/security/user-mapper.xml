@@ -21,4 +21,20 @@
     		 , ROLE_NM
     	  FROM TB_ROLE
     </select>
+
+    <insert id="signInUser" parameterType="kr.letech.study.cmmn.security.vo.UserVO">
+        INSERT INTO TB_USER( USER_ID
+                           , USER_NM
+                           , USER_PW)
+        VALUES ( #{userId}
+               , #{userNm}
+               , #{userPw})
+    </insert>
+
+    <insert id="signInAuth" parameterType="kr.letech.study.cmmn.security.vo.UserAuthVO">
+        INSERT INTO TB_USERAUTH( USER_ID
+                               , ROLE_ID)
+        VALUES ( #{userId}
+               , #{roleId})
+    </insert>
 </mapper>

@@ -8,6 +8,9 @@ import kr.letech.study.cmmn.security.service.UserLoginServiceImpl;
 import kr.letech.study.cmmn.security.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,9 +29,11 @@ public class LoginController {
 	}
 	
 	@PostMapping("/signIn")
-	public String signIn(UserVO userVO) {
+	public String signIn(UserVO userVO, @RequestParam List<String> authId) {
 		System.out.println("userVO" + userVO);
-		return null;
+		System.out.println("authId = " + authId);
+		userLoginService.signIn(userVO, authId);
+		return "/login";
 	}
 	
 }

@@ -12,8 +12,7 @@ modifyBtns.forEach((modifyBtn) => {
 			type: 'post',
 			data: boardVO,
 			success: function() {
-				//location.href = "/board/manageBoard";
-				window.location.reload();
+				window.location.href = "/board/manageBoard";
 			},
 			error: function(xhr) {
 				console.log(xhr.status);

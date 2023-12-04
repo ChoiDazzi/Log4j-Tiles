@@ -10,6 +10,10 @@ function fnLogin() {
 	
 	return true;
 }
+
+function fn_signin() {
+	location.href = "/signIn";
+}
 </script>
 
 <form action="${CONTEXT_PATH}/login" method="post" id="frm" onsubmit="return fnLogin()">
@@ -17,3 +21,4 @@ function fnLogin() {
 	<input type="password" name="password" id="password"/>
 	<button>로그인</button>
 </form>
+<button type="button" onclick="fn_signin()">회원가입</button>

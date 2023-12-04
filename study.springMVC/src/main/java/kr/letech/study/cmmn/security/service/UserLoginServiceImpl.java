@@ -1,6 +1,8 @@
 package kr.letech.study.cmmn.security.service;
 
 import kr.letech.study.cmmn.security.UserMapper;
+import kr.letech.study.cmmn.security.vo.RoleVO;
+import kr.letech.study.cmmn.security.vo.UserAuthVO;
 import kr.letech.study.cmmn.security.vo.UserDetailsVO;
 import kr.letech.study.cmmn.security.vo.UserVO;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +24,23 @@ public class UserLoginServiceImpl implements UserDetailsService{
 	private final MessageSource messageSource;
 	private final UserMapper userMapper;
 	
-	public List<String> getAllAuth() {
+	public List<RoleVO> getAllAuth() {
 		return userMapper.getAllAuth();
 	}
-	
+
+	public void signIn(UserVO userVO, List<String> authId) {
+		UserAuthVO userAuthVO = new UserAuthVO();
+		BCryptPasswordEncoder bp = new BCryptPasswordEncoder();
+		userVO.setUserPw(bp.encode(userVO.getUserPw()));
+		userMapper.signInUser(userVO);
+
+		userAuthVO.setUserId(userVO.getUserId());
+		for (String auth : authId) {
+			userAuthVO.setRoleId(auth);
+			userMapper.signInAuth(userAuthVO);
+		}
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		UserDetailsVO userDetailsVO = new UserDetailsVO();

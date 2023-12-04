@@ -6,7 +6,8 @@
 	PW: <input type="password" name="userPw" id="userPw"/>
 	
 	<c:forEach items="${auths}" var="auth">
-		<input type="radio" name="authId" value="<c:out value="${auth.roleNm}"/>"/>
+		<label for="authId">${auth.roleNm}</label>
+		<input type="checkbox" id="authId" name="authId" value="<c:out value="${auth.roleId}"/>" multiple/>
 	</c:forEach>
 	<button type="submit">로그인</button>
 </form>

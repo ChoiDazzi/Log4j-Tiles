@@ -9,9 +9,9 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @ToString
-public class RoleVO {
-    private String roleId;
-    private String roleNm;
+public class UserAuthVO {
+	private String userId;
+	private String roleId;
     private Timestamp rgstDt;
     private String rgstId;
     private Timestamp updtDt;
