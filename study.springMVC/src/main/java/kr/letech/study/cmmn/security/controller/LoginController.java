@@ -28,7 +28,6 @@ public class LoginController {
 	@PostMapping("/signIn")
 	public String signIn(UserVO userVO) {
 		System.out.println("userVO" + userVO);
-		
 		return null;
 	}
 	
