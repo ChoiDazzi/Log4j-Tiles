@@ -31,11 +31,15 @@ modifyBtn.addEventListener("click", () => {
     let postVO = new FormData(frm);
     if (confirm("수정하시겠습니까?")) {
         $.ajax({
-            url: '/board/modifyPost',
+            url: '/post/modifyPost',
             type: 'post',
             processData:false,
             contentType:false,
             data: postVO,
+            success: function() {
+				after.style.display = "none";
+    			before.style.display = "block";
+			},
             error: function (xhr) {
                 console.log(xhr.status);
             }
@@ -45,7 +49,16 @@ modifyBtn.addEventListener("click", () => {
 
 deleteBtn.addEventListener("click", () => {
     if (confirm("삭제하시겠습니까?")) {
-        //여기서부터하면됨
+        $.ajax({
+            url: `/post/deletePost/${postId}`,
+            type: 'post',
+            success: function() {
+				location.href = `/board/board/${boardId}`;
+			},
+            error: function (xhr) {
+                console.log(xhr.status);
+            }
+        });
     }
 });
 

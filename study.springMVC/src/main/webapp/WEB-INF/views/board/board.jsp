@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" href="/resources/css/board.css">
+<link rel="stylesheet" href="${CONTEXT_PATH}/resources/css/board.css">
 <div class="wrapper">
     <div class="header-content">
         <h3 id="boardNm" data-id="${boardId}">${boardNm}</h3>
@@ -19,7 +19,7 @@
             <c:forEach items="${posts}" var="post" varStatus="status">
                 <tr>
                     <td>${(pageInfo.pageNum-1) * 10 + status.count}</td>
-                    <td><a href="/board/detailPost/<c:out value="${boardId}"/>/<c:out value="${post.postId}"/>">${post.postTtl}</a></td>
+                    <td><a href="/post/detailPost/<c:out value="${boardId}"/>/<c:out value="${post.postId}"/>">${post.postTtl}</a></td>
                     <td>${post.userNm}</td>
                     <td>${post.rgstDt}</td>
                 </tr>
@@ -56,4 +56,4 @@
     </div>
 </div>
 
-<script src="/resources/js/board.js"></script>
+<script src="${CONTEXT_PATH}/resources/js/board.js"></script>

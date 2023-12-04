@@ -2,6 +2,7 @@ package kr.letech.study.board.controller;
 
 import com.github.pagehelper.PageInfo;
 import kr.letech.study.board.service.impl.BoardServiceImpl;
+import kr.letech.study.board.service.impl.PostServiceImpl;
 import kr.letech.study.board.vo.BoardVO;
 import kr.letech.study.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 	private final BoardServiceImpl boardService;
+	private final PostServiceImpl postService;
 
 	@ModelAttribute("navItems")
 	public List<BoardVO> getNavItems() {
+		System.out.println(boardService.getNavItems());
 		return boardService.getNavItems();
 	}
 
@@ -28,45 +31,31 @@ public class BoardController {
 						   @RequestParam(defaultValue = "10") int pageSize,
 						   Model model) {
 		PageInfo<PostVO> pageInfo = boardService.getAllPostByBoard(boardId, pageNum, pageSize);
-		model.addAttribute("boardNm", boardService.getNavNm(boardId));
+		model.addAttribute("boardNm", postService.getNavNm(boardId));
 		model.addAttribute("posts", pageInfo.getList());
 		model.addAttribute("pageInfo", pageInfo);
 
 		return "board/board.main";
 	}
 
-	@GetMapping("/board/registerPost/{boardId}")
-	public String registerPost(@PathVariable String boardId, Model model) {
-		model.addAttribute("boardId", boardId);
-		model.addAttribute("boardNm", boardService.getNavNm(boardId));
-		model.addAttribute("currentTime", boardService.getCurrentTime());
-		return "board/registerPost.main";
+	@GetMapping("/board/manageBoard")
+	public String getManageBoard() {
+		return "board/manageBoard.main";
+	}
+	
+	@PostMapping("/board/insertBoard")
+	public String insertBoard(String boardNm, Principal principal) {
+		boardService.insertBoard(boardNm, principal.getName());
+		return "redirect:/board/manageBoard";
+	}
+	
+	@PostMapping("/board/modifyBoard")
+	public void modifyBoard(BoardVO boardVO, Principal principal) {
+		boardService.modifyBoard(boardVO, principal.getName());
 	}
 
-	@PostMapping("/board/registerPost")
-	public String registerPost(@ModelAttribute PostVO postVO, Principal principal) {
-		boardService.insertPost(postVO, principal.getName());
-		return "redirect:/board/board/b001";
-	}
-
-	@GetMapping("/board/detailPost/{boardId}/{postId}")
-	public String detailPost(@PathVariable String boardId,
-                             @PathVariable String postId,
-                             Model model) {
-		model.addAttribute("boardNm", boardService.getNavNm(boardId));
-		model.addAttribute("postInfo", boardService.getPost(postId));
-		return "board/detailPost.main";
-	}
-
-	@ResponseBody
-	@PostMapping("/board/modifyPost")
-	public void modifyPost(PostVO postVO, Principal principal) {
-		System.out.println("postVO = " + postVO);
-		boardService.modifyPost(postVO, principal.getName());
-	}
-
-	@PostMapping("/board/deletePost")
-	public String deletePost() {
-		return null;
+	@PostMapping("/board/deleteBoard/{boardId}")
+	public void modifyBoard(@PathVariable String boardId, Principal principal) {
+		boardService.deleteBoard(boardId, principal.getName());
 	}
 }

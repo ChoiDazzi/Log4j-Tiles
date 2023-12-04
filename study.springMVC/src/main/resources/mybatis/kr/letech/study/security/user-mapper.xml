@@ -15,4 +15,10 @@
           FROM TB_USERAUTH
          WHERE USER_ID = #{userId}
     </select>
+    
+    <select id="getAllAuth" resultType="kr.letech.study.cmmn.security.vo.RoleVO">
+    	SELECT ROLE_ID
+    		 , ROLE_NM
+    	  FROM TB_ROLE
+    </select>
 </mapper>

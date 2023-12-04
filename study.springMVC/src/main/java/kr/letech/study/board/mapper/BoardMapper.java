@@ -1,4 +1,4 @@
-package kr.letech.study.board;
+package kr.letech.study.board.mapper;
 
 import kr.letech.study.board.vo.BoardVO;
 import kr.letech.study.board.vo.PostVO;
@@ -10,15 +10,12 @@ import java.util.List;
 public interface BoardMapper {
     /* select */
     List<BoardVO> getNavItems();
-    String getNavNm(String boardId);
-    String getPostSeq();
     List<PostVO> getAllPostByBoard(String boardId);
-    PostVO getPost(String postId);
-
-    /* insert */
-    void insertPost(PostVO postVO);
-
+    
     /* update */
-    void modifyPost(PostVO postVO);
-
+    void modifyBoard(BoardVO boardVO);
+    void deleteBoard(BoardVO boardVO);
+    
+    /* insert */
+    void insertBoard(BoardVO boardVO);
 }

@@ -9,13 +9,12 @@ import java.util.List;
 public interface BoardService {
     /* select */
     List<BoardVO> getNavItems();
-    String getNavNm(String boardId);
     PageInfo<PostVO> getAllPostByBoard(String boardId, int pageNum, int pageSize);
-    PostVO getPost(String postId);
-
-    /* insert */
-    void insertPost(PostVO postVO, String userId);
-
+    
     /* update */
-    void modifyPost(PostVO postVO, String userId);
+    void modifyBoard(BoardVO boardVO, String userId);
+    void deleteBoard(String boardId, String userId);
+    
+    /* insert */
+    void insertBoard(String boardNm, String userId);
 }

@@ -5,6 +5,7 @@ import kr.letech.study.cmmn.security.vo.UserDetailsVO;
 import kr.letech.study.cmmn.security.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
@@ -20,7 +21,11 @@ import org.springframework.stereotype.Service;
 public class UserLoginServiceImpl implements UserDetailsService{
 	private final MessageSource messageSource;
 	private final UserMapper userMapper;
-
+	
+	public List<String> getAllAuth() {
+		return userMapper.getAllAuth();
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		UserDetailsVO userDetailsVO = new UserDetailsVO();

@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<link rel="stylesheet" href="/resources/css/registerPost.css">
+<link rel="stylesheet" href="${CONTEXT_PATH}/resources/css/registerPost.css">
 <div class="wrapper">
   <div class="header-content">
     <h3>${boardNm} - 게시글 등록</h3>
@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="form-content">
-    <form action="/board/registerPost" id="frm" method="post">
+    <form action="/post/registerPost" id="frm" method="post">
       <input type="hidden" name="boardId" value="${boardId}">
       <table border="1" class="tb tb_register">
         <tr>
@@ -36,4 +36,4 @@
   </div>
 </div>
 
-<script src="/resources/js/registerPost.js"></script>
+<script src="${CONTEXT_PATH}/resources/js/registerPost.js"></script>

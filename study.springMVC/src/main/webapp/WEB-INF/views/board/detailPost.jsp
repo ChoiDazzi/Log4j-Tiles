@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" href="/resources/css/registerPost.css">
+<link rel="stylesheet" href="${CONTEXT_PATH}/resources/css/registerPost.css">
 <c:set var="userId" value="${pageContext.request.userPrincipal.name}" />
 <c:set var="postId" value="${postInfo.postId}" />
 <div class="wrapper">
@@ -53,4 +53,4 @@
     </div>
 </div>
 
-<script src="/resources/js/detailPost.js"></script>
+<script src="${CONTEXT_PATH}/resources/js/detailPost.js"></script>
