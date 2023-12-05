@@ -12,7 +12,7 @@
 <c:set var="postId" value="${postInfo.postId}" />
 <div class="wrapper">
     <div class="header-content">
-        <h3 id="boardNm" data-id="${boardId}">${boardNm} - 게시글 등록</h3>
+        <h3 id="boardNm" data-id="${boardId}">${boardNm} - 게시글 상세</h3>
         <div class="btn-content">
             <button id="backBtn" type="button">목록으로</button>
             <c:if test="${userId eq postInfo.userId}">
@@ -43,6 +43,19 @@
                     <td><c:out value="${postInfo.userNm}"/></td>
                     <td>날짜</td>
                     <td><c:out value="${postInfo.rgstDt}"/></td>
+                </tr>
+                <tr>
+                	<td>첨부파일</td>
+                	<td colspan="3">
+                		<nav>
+                			<c:forEach items="${files}" var="file">
+	                			<li style="list-style: none;">
+	                				<a href='/post/fileDownload/<c:out value="${file.fileId}"/>'>${file.fileOrgNm}</a>
+	                				<span style="font-size: 10px;">${file.fileSize} byte</span>
+	                			</li>
+                			</c:forEach>
+                		</nav>
+                	</td>
                 </tr>
                 <tr>
                     <td>내용</td>

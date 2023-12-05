@@ -10,6 +10,16 @@ let content = document.querySelector("textarea[name='postCnt']");
 let before = document.querySelector(".before");
 let after = document.querySelector(".after");
 
+fn_active = () => {
+	after.style.display = "block";
+    before.style.display = "none";
+}
+
+fn_inactive = () => {
+	after.style.display = "none";
+    before.style.display = "block";
+}
+
 backBtn.addEventListener("click", () => {
     location.href = `/board/board/${boardId}`;
 });
@@ -17,13 +27,11 @@ backBtn.addEventListener("click", () => {
 modify.addEventListener("click", () => {
     inputTitle.removeAttribute("readonly");
     content.removeAttribute("readonly");
-    after.style.display = "block";
-    before.style.display = "none";
+    fn_active();
 });
 
 cancelBtn.addEventListener("click", () => {
-    after.style.display = "none";
-    before.style.display = "block";
+    fn_inactive();
 });
 
 modifyBtn.addEventListener("click", () => {

@@ -16,4 +16,7 @@ public interface PostService {
     /* update */
     void modifyPost(PostVO postVO, String userId);
     void deletePost(String postId);
+    
+    /* file */
+    List<FileVO> getFileByPost(String postId);
 }

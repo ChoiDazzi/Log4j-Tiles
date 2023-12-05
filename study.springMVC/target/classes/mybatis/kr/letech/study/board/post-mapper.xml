@@ -57,6 +57,24 @@
                , #{filePath}
                , #{rgstId})
     </insert>
+    
+    <select id="getFileByPost" parameterType="string" resultType="kr.letech.study.board.vo.FileVO">
+    	SELECT FILE_ID
+		     , FILE_ORG_NM
+		     , FILE_SIZE
+	      FROM TB_FILE
+	     WHERE POST_ID = #{postId}
+    </select>
+
+    <select id="getFileById" parameterType="string" resultType="kr.letech.study.board.vo.FileVO">
+    	SELECT FILE_ID
+		     , FILE_ORG_NM
+		     , FILE_SAVE_NM
+		     , FILE_SIZE
+		     , FILE_PATH
+	      FROM TB_FILE
+	     WHERE FILE_ID = #{fileId}
+    </select>
 
     <update id="modifyPost" parameterType="kr.letech.study.board.vo.PostVO">
         UPDATE TB_POST

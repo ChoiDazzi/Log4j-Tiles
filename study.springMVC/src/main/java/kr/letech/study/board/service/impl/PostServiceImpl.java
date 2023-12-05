@@ -52,6 +52,11 @@ public class PostServiceImpl implements PostService{
 	public void deletePost(String postId) {
 		postMapper.deletePost(postId);
 	}
+	
+	@Override
+	public List<FileVO> getFileByPost(String postId) {
+		return postMapper.getFileByPost(postId);
+	}
 
     public String getCurrentTime() {
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
@@ -67,4 +72,5 @@ public class PostServiceImpl implements PostService{
         System.out.println("postId = " + postId);
         return postId;
     }
+
 }
