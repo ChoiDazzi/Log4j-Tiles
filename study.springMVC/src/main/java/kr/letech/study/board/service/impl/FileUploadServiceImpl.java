@@ -1,10 +1,13 @@
 package kr.letech.study.board.service.impl;
 
-import kr.letech.study.board.mapper.PostMapper;
+import kr.letech.study.board.dao.PostDAO;
 import kr.letech.study.board.vo.FileVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,17 +22,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.nio.file.Files;
 
 import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class FileUploadUtils {
+public class FileUploadServiceImpl {
     @Value("${file.directory}")
     private String uploadFolder;
     
-    private final PostMapper postMapper;
+    private final PostDAO postDao;
 
     public List<FileVO> uploadFile(ArrayList<MultipartFile> files) {
         List<FileVO> fileList = new ArrayList<>();
@@ -41,9 +45,9 @@ public class FileUploadUtils {
 
         for (MultipartFile file : files) {
             FileVO fileVO = new FileVO();
-            String uploadFileName = file.getOriginalFilename();
+            String uploadFileName = file.getOriginalFilename(); 
             String uuid = UUID.randomUUID().toString();
-            uploadFileName = uuid + "_" + uploadFileName;
+            uploadFileName = uuid + "_" + uploadFileName; // -> uuid 
             File saveFile = new File(uploadPath, uploadFileName);
 
             try {
@@ -53,8 +57,8 @@ public class FileUploadUtils {
             }
 
             fileVO.setFileId(uuid);
-            fileVO.setFileOrgNm(file.getOriginalFilename());
-            fileVO.setFileSaveNm(uploadFileName);
+            fileVO.setFileOrgNm(file.getOriginalFilename()); //문자 확장자 붙이면 ...  
+            fileVO.setFileSaveNm(uploadFileName); //local - uuid
             fileVO.setFileSize(file.getSize());
             fileVO.setFilePath(uploadFolder + "/" + getFolder());
             fileList.add(fileVO);
@@ -63,8 +67,8 @@ public class FileUploadUtils {
         return fileList;
     }
 
-    public String getFolder() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public String getFolder() { //고민...os 운영체제랑 관련...
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); //수정
 
         Date date = new Date();
         String str = sdf.format(date);
@@ -73,7 +77,7 @@ public class FileUploadUtils {
     }
     
     public void fileDownload(String fileId, HttpServletResponse response){
-    	FileVO fileVO = postMapper.getFileById(fileId);
+    	FileVO fileVO = postDao.getFileById(fileId);
     	String filename = fileVO.getFileOrgNm();
     	File file = new File(fileVO.getFilePath(), fileVO.getFileSaveNm());
     	String encodedFileName;
@@ -83,7 +87,6 @@ public class FileUploadUtils {
 	    	response.setContentLength((int) file.length());
 	    	response.setHeader("Content-Disposition", "attatchment;filename=\"" + encodedFileName + "\"");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -94,5 +97,18 @@ public class FileUploadUtils {
 			e.printStackTrace();
 		}
     }
-
+    
+    public ResponseEntity<byte[]> preview(FileVO fileVO) { //이미지 리사이징...(라이브러리)
+    	File file = new File(fileVO.getFilePath() + "\\" + fileVO.getFileSaveNm());
+    	ResponseEntity<byte[]> fileBytEntity = null;
+    	try {
+    		HttpHeaders headers = new HttpHeaders();
+    		headers.add("Content-Type", Files.probeContentType(file.toPath()));
+    		fileBytEntity = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+		return fileBytEntity;
+	}
 }

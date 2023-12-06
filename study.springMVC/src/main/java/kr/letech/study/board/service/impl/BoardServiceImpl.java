@@ -3,7 +3,7 @@ package kr.letech.study.board.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import kr.letech.study.board.mapper.BoardMapper;
+import kr.letech.study.board.dao.BoardDAO;
 import kr.letech.study.board.service.BoardService;
 import kr.letech.study.board.vo.BoardVO;
 import kr.letech.study.board.vo.PostVO;
@@ -19,24 +19,24 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
-    private final BoardMapper boardMapper;
+    private final BoardDAO boardDao;
 
     @Override
     public List<BoardVO> getNavItems() {
-        return boardMapper.getNavItems();
+        return boardDao.getNavItems();
     }
     
     @Override
     public PageInfo<PostVO> getAllPostByBoard(String boardId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<PostVO> posts = boardMapper.getAllPostByBoard(boardId);
-        return new PageInfo<>(posts);
+        List<PostVO> posts = boardDao.getAllPostByBoard(boardId);
+        return PageInfo.of(posts);
     }
 
 	@Override
 	public void modifyBoard(BoardVO boardVO, String userId) {
 		boardVO.setUpdtId(userId);
-		boardMapper.modifyBoard(boardVO);
+		boardDao.modifyBoard(boardVO);
 	}
 
 	@Override
@@ -44,15 +44,15 @@ public class BoardServiceImpl implements BoardService {
 		BoardVO boardVO = new BoardVO();
 		boardVO.setBoardId(boardId);
 		boardVO.setUpdtId(userId);
-		boardMapper.deleteBoard(boardVO);
+		boardDao.deleteBoard(boardVO);
 	}
 
 	@Override
 	public void insertBoard(String boardNm, String userId) {
 		BoardVO boardVO = new BoardVO();
-		boardVO.setBoardId("b" + boardMapper.getBoardSeq());
+		boardVO.setBoardId("b" + boardDao.getBoardSeq());
 		boardVO.setBoardNm(boardNm);
-		boardVO.setUpdtId(userId);
-		boardMapper.insertBoard(boardVO);
+		boardVO.setRgstId(userId);
+		boardDao.insertBoard(boardVO);
 	}
 }

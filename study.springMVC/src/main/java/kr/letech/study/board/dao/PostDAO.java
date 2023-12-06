@@ -1,4 +1,4 @@
-package kr.letech.study.board.mapper;
+package kr.letech.study.board.dao;
 
 import kr.letech.study.board.vo.FileVO;
 
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.letech.study.board.vo.PostVO;
 
 @Mapper
-public interface PostMapper {
+public interface PostDAO {
 	/* select */
 	String getNavNm(String boardId);
     String getPostSeq();

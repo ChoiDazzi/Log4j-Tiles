@@ -1,4 +1,4 @@
-package kr.letech.study.board.mapper;
+package kr.letech.study.board.dao;
 
 import kr.letech.study.board.vo.BoardVO;
 import kr.letech.study.board.vo.PostVO;
@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface BoardMapper {
+public interface BoardDAO {
     /* select */
     List<BoardVO> getNavItems();
     List<PostVO> getAllPostByBoard(String boardId);

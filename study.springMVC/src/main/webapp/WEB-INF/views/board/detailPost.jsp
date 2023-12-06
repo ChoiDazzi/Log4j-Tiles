@@ -48,12 +48,20 @@
                 	<td>첨부파일</td>
                 	<td colspan="3">
                 		<nav>
-                			<c:forEach items="${files}" var="file">
-	                			<li style="list-style: none;">
-	                				<a href='/post/fileDownload/<c:out value="${file.fileId}"/>'>${file.fileOrgNm}</a>
-	                				<span style="font-size: 10px;">${file.fileSize} byte</span>
-	                			</li>
-                			</c:forEach>
+                			<c:choose>
+                				<c:when test="${empty files}">
+                				<li style="list-style: none;">첨부파일이 없습니다.</li>
+                				</c:when>
+                				<c:when test="${not empty files}">
+	                				<c:forEach items="${files}" var="file">
+			                			<li style="list-style: none;">
+			                				<a href='/post/fileDownload/<c:out value="${file.fileId}"/>'>${file.fileOrgNm}</a>
+			                				<span style="font-size: 10px;">${file.fileSize} byte</span>
+			                				<img alt="" src="<%=request.getContextPath()%>/post/preview?fileId=<c:out value="${file.fileId}"/>">
+			                			</li>
+		                			</c:forEach>
+                				</c:when>
+                			</c:choose>
                 		</nav>
                 	</td>
                 </tr>
@@ -64,6 +72,18 @@
             </table>
         </form>
     </div>
+   <%--  
+    <div class="comment-content">
+    	<div class="comment-box" style="border: 1px solid gray;">
+    		<form action="">
+    			<span>작성자</span>
+    			<span><c:out value="${postInfo.userNm}"/></span>
+    			<textarea rows="" cols="" name="cmntDtl" style="border: 1px solid gray;"></textarea>
+    			<button type="button" id="registerComment">등록</button>
+    		</form>
+    	</div>
+    	<div id="comment-body"></div>
+    </div> --%>
 </div>
 
 <script src="${CONTEXT_PATH}/resources/js/detailPost.js"></script>

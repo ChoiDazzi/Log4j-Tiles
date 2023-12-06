@@ -21,7 +21,6 @@ public class BoardController {
 
 	@ModelAttribute("navItems")
 	public List<BoardVO> getNavItems() {
-		System.out.println(boardService.getNavItems());
 		return boardService.getNavItems();
 	}
 

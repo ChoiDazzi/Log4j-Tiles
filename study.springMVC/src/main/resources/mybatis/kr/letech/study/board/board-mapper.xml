@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="kr.letech.study.board.mapper.BoardMapper">
+<mapper namespace="kr.letech.study.board.dao.BoardDAO">
     <select id="getNavItems" resultType="kr.letech.study.board.vo.BoardVO">
         SELECT BOARD_ID
              , BOARD_NM

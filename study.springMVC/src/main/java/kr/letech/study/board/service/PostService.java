@@ -11,7 +11,7 @@ public interface PostService {
 	PostVO getPost(String postId);
 	
 	 /* insert */
-    void insertPost(PostVO postVO, String userId, List<FileVO> fileVOList);
+    void insertPost(PostVO postVO, String userId);
 
     /* update */
     void modifyPost(PostVO postVO, String userId);
@@ -19,4 +19,6 @@ public interface PostService {
     
     /* file */
     List<FileVO> getFileByPost(String postId);
+    void insertFile(List<FileVO> fileVOList, String userId, String postId);
+    FileVO getFileById(String fileId);
 }

@@ -17,6 +17,7 @@
 		<!-- 관리자페이지는 관리자만 접근 허용 -->
 		<s:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<s:intercept-url pattern="/board/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
+		<s:intercept-url pattern="/post/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
 
 		<!-- 로그인 설정 -->
 		<s:form-login
@@ -31,7 +32,7 @@
 		<!-- 로그아웃 설정 -->
 		<s:logout
 				logout-url="/logout"
-				logout-success-url="/"
+				logout-success-url="/login"
 				invalidate-session="true"
 				delete-cookies="true" />
 

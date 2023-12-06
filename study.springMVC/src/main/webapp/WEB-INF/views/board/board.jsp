@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="${CONTEXT_PATH}/resources/css/board.css">
 <div class="wrapper">
     <div class="header-content">
-        <h3 id="boardNm" data-id="${boardId}">${boardNm}</h3>
+        <h3 id="boardNm" data-id="<c:out value="${boardId}"/>"><c:out value="${boardNm}"/></h3>
         <button id="registerPost" type="button">게시글 등록</button>
     </div>
     <table border="1" class="tb tb_board">
@@ -18,10 +18,10 @@
         <tbody>
             <c:forEach items="${posts}" var="post" varStatus="status">
                 <tr>
-                    <td>${(pageInfo.pageNum-1) * 10 + status.count}</td>
-                    <td><a href="/post/detailPost/<c:out value="${boardId}"/>/<c:out value="${post.postId}"/>">${post.postTtl}</a></td>
-                    <td>${post.userNm}</td>
-                    <td>${post.rgstDt}</td>
+                    <td><c:out value="${(pageInfo.pageNum-1) * 10 + status.count}"/></td>
+                    <td><a href="/post/detailPost/<c:out value="${boardId}"/>/<c:out value="${post.postId}"/>"><c:out value="${post.postTtl}"/></a></td>
+                    <td><c:out value="${post.userNm}"/></td>
+                    <td><c:out value="${post.rgstDt}"/></td>
                 </tr>
             </c:forEach>
         </tbody>
