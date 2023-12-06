@@ -67,13 +67,13 @@ public class FileUploadServiceImpl {
         return fileList;
     }
 
-    public String getFolder() { //고민...os 운영체제랑 관련...
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); //수정
+    public String getFolder() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
         Date date = new Date();
         String str = sdf.format(date);
 
-        return str.replace("-", File.separator);
+        return str;
     }
     
     public void fileDownload(String fileId, HttpServletResponse response){
