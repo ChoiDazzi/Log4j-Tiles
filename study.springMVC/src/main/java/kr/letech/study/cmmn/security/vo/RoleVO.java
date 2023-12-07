@@ -10,11 +10,11 @@ import java.sql.Timestamp;
 @Setter
 @ToString
 public class RoleVO {
-    private String roleId;
-    private String roleNm;
-    private Timestamp rgstDt;
-    private String rgstId;
-    private Timestamp updtDt;
-    private String updtId;
-    private char delYn;
+    private String roleId;		// 권한 아이디
+    private String roleNm;		// 권한 이름
+    private String rgstDt;		// 등록 일시
+    private String rgstId;		// 등록 아이디
+    private String updtDt;		// 수정 일시
+    private String updtId;		// 수정 아이디
+    private char delYn;			// 삭제 여부
 }

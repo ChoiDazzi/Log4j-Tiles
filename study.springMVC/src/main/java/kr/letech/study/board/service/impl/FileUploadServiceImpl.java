@@ -26,7 +26,6 @@ import java.nio.file.Files;
 
 import javax.servlet.http.HttpServletResponse;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileUploadServiceImpl {
@@ -35,20 +34,17 @@ public class FileUploadServiceImpl {
     
     private final PostDAO postDao;
 
-    public List<FileVO> uploadFile(ArrayList<MultipartFile> files) {
+    public List<FileVO> uploadFile(List<MultipartFile> files) {
         List<FileVO> fileList = new ArrayList<>();
         File uploadPath = new File(uploadFolder, getFolder());
-        log.info(uploadFolder.toString());
         if (!uploadPath.exists()) {
             uploadPath.mkdirs();
         }
 
         for (MultipartFile file : files) {
             FileVO fileVO = new FileVO();
-            String uploadFileName = file.getOriginalFilename(); 
             String uuid = UUID.randomUUID().toString();
-            uploadFileName = uuid + "_" + uploadFileName; // -> uuid 
-            File saveFile = new File(uploadPath, uploadFileName);
+            File saveFile = new File(uploadPath, uuid);
 
             try {
                 file.transferTo(saveFile);
@@ -57,8 +53,8 @@ public class FileUploadServiceImpl {
             }
 
             fileVO.setFileId(uuid);
-            fileVO.setFileOrgNm(file.getOriginalFilename()); //문자 확장자 붙이면 ...  
-            fileVO.setFileSaveNm(uploadFileName); //local - uuid
+            fileVO.setFileOrgNm(file.getOriginalFilename()); 
+            fileVO.setFileSaveNm(uuid); 
             fileVO.setFileSize(file.getSize());
             fileVO.setFilePath(uploadFolder + "/" + getFolder());
             fileList.add(fileVO);

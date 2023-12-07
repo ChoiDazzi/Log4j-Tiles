@@ -32,13 +32,21 @@
                             , USER_ID
                             , POST_TTL
                             , POST_CNT
-                            , RGST_ID)
+                            , RGST_DT
+                            , RGST_ID
+                            , UPDT_DT
+                            , UPDT_ID
+                            , DEL_YN)
         VALUES ( #{postId}
                , #{boardId}
                , #{userId}
                , #{postTtl}
                , #{postCnt}
-               , #{rgstId})
+               , NOW()
+               , #{rgstId}
+               , NOW()
+               , #{updtId}
+               , 'N')
     </insert>
 
     <insert id="insertFile" parameterType="kr.letech.study.board.vo.FileVO">
@@ -48,14 +56,22 @@
                             , FILE_SAVE_NM
                             , FILE_SIZE
                             , FILE_PATH
-                            , RGST_ID)
+                            , RGST_DT
+                            , RGST_ID
+                            , UPDT_DT
+                            , UPDT_ID
+                            , DEL_YN)
         VALUES ( #{fileId}
                , #{postId}
                , #{fileOrgNm}
                , #{fileSaveNm}
                , #{fileSize}
                , #{filePath}
-               , #{rgstId})
+               , NOW()
+               , #{rgstId}
+               , NOW()
+               , #{updtId}
+               , 'N')
     </insert>
     
     <select id="getFileByPost" parameterType="string" resultType="kr.letech.study.board.vo.FileVO">
@@ -64,6 +80,7 @@
 		     , FILE_SIZE
 	      FROM TB_FILE
 	     WHERE POST_ID = #{postId}
+	       AND DEL_YN = 'N'
     </select>
 
     <select id="getFileById" parameterType="string" resultType="kr.letech.study.board.vo.FileVO">
@@ -74,6 +91,7 @@
 		     , FILE_PATH
 	      FROM TB_FILE
 	     WHERE FILE_ID = #{fileId}
+	       AND DEL_YN = 'N'
     </select>
 
     <update id="modifyPost" parameterType="kr.letech.study.board.vo.PostVO">

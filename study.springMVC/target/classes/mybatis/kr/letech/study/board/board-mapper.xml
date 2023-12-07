@@ -46,7 +46,11 @@
     <insert id="insertBoard" parameterType="kr.letech.study.board.vo.BoardVO">
         INSERT INTO TB_BOARD ( BOARD_ID
                              , BOARD_NM
-                             , RGST_ID)
+                             , RGST_DT
+                             , RGST_ID
+                             , UPDT_DT
+                             , UPDT_ID
+                             , DEL_YN)
         VALUES ( #{boardId}
                , #{boardNm}
                , #{rgstId})

@@ -1,23 +1,21 @@
 package kr.letech.study.board.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import kr.letech.study.board.service.impl.BoardServiceImpl;
+import kr.letech.study.board.service.BoardService;
+import kr.letech.study.board.service.PostService;
 import kr.letech.study.board.service.impl.FileUploadServiceImpl;
 import kr.letech.study.board.vo.BoardVO;
 import kr.letech.study.board.vo.FileVO;
 
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import kr.letech.study.board.service.impl.PostServiceImpl;
 import kr.letech.study.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,9 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class PostController {
 	
-	private final PostServiceImpl postService;
-	private final FileUploadServiceImpl fileUploadUtils; //service
-	private final BoardServiceImpl boardService;
+	private final PostService postService;
+	private final FileUploadServiceImpl fileuploadService; 
+	private final BoardService boardService;
 	
 	@ModelAttribute("navItems")
 	public List<BoardVO> getNavItems() {
@@ -37,22 +35,20 @@ public class PostController {
 	
 	@GetMapping("/post/registerPost/{boardId}")
 	public String registerPost(@PathVariable String boardId, Model model) {
+		String navNm = postService.getNavNm(boardId);
+		String currentTime = postService.getCurrentTime();
 		model.addAttribute("boardId", boardId);
-		model.addAttribute("boardNm", postService.getNavNm(boardId)); //변수로 따로 빼서 담기 
-		model.addAttribute("currentTime", postService.getCurrentTime());
+		model.addAttribute("boardNm", navNm); 
+		model.addAttribute("currentTime", currentTime);
 		return "board/registerPost.main";
 	}
 
 	@PostMapping("/post/registerPost")
 	public String registerPost(@ModelAttribute PostVO postVO,
-							   @RequestParam("multiUpload") ArrayList<MultipartFile> files, //vo, List 수정 
+							   @RequestParam("multiUpload") List<MultipartFile> files, 
 							   Principal principal) {
 		String userId = principal.getName();
-		postService.insertPost(postVO, userId);
-		if (files.get(0).getSize() != 0) { //서비스 단으로 넘기기 -> TRANSACTION
-			List<FileVO> fileVOList = fileUploadUtils.uploadFile(files);
-			postService.insertFile(fileVOList, userId, postVO.getPostId());
-		}
+		postService.insertPost(postVO, userId, files);
 		return "redirect:/board/board/" + postVO.getBoardId();
 	}
 
@@ -60,9 +56,12 @@ public class PostController {
 	public String detailPost(@PathVariable String boardId, 
 							 @PathVariable String postId, 
 							 Model model) {
-		model.addAttribute("files", postService.getFileByPost(postId));
-		model.addAttribute("boardNm", postService.getNavNm(boardId));
-		model.addAttribute("postInfo", postService.getPost(postId));
+		List<FileVO> files = postService.getFileByPost(postId);
+		String boardNm = postService.getNavNm(boardId);
+		PostVO postInfo = postService.getPost(postId);
+		model.addAttribute("files", files);
+		model.addAttribute("boardNm", boardNm);
+		model.addAttribute("postInfo", postInfo);
 		return "board/detailPost.main";
 	}
 
@@ -80,14 +79,14 @@ public class PostController {
 	
 	@GetMapping("/post/fileDownload/{fileId}")
 	public void fileDownload(@PathVariable String fileId, HttpServletResponse response){
-		fileUploadUtils.fileDownload(fileId, response);
+		fileuploadService.fileDownload(fileId, response);
 	}
 
 	@ResponseBody
 	@GetMapping("/post/preview")
 	public ResponseEntity<byte[]> preview(String fileId) {
 		FileVO fileVO = postService.getFileById(fileId);
-		ResponseEntity<byte[]> bytefileEntity = fileUploadUtils.preview(fileVO);
+		ResponseEntity<byte[]> bytefileEntity = fileuploadService.preview(fileVO);
 		return bytefileEntity;
 	}
 }
