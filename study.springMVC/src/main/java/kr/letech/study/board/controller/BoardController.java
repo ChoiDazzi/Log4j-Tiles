@@ -35,8 +35,6 @@ public class BoardController {
 						   @RequestParam(defaultValue = "10") int pageSize,
 						   BoardVO boardVO,
 						   Model model) {
-		System.out.println("boardId = " + boardId);
-		System.out.println("boardVO = " + boardVO);
 		PageInfo<PostVO> pageInfo = boardService.getAllPostByBoard(boardVO, pageNum, pageSize);
 		model.addAttribute("boardNm", postService.getNavNm(boardId));
 		model.addAttribute("posts", pageInfo.getList());
