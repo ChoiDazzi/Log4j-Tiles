@@ -84,9 +84,8 @@ public class PostController {
 
 	@ResponseBody
 	@GetMapping("/post/preview")
-	public ResponseEntity<byte[]> preview(String fileId) {
+	public void preview(String fileId, HttpServletResponse response) {
 		FileVO fileVO = postService.getFileById(fileId);
-		ResponseEntity<byte[]> bytefileEntity = fileuploadService.preview(fileVO);
-		return bytefileEntity;
+		fileuploadService.preview(fileVO, response);
 	}
 }

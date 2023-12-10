@@ -4,6 +4,7 @@ import kr.letech.study.board.dao.PostDAO;
 import kr.letech.study.board.vo.FileVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,19 +43,22 @@ public class FileUploadServiceImpl {
         }
 
         for (MultipartFile file : files) {
-            FileVO fileVO = new FileVO();
+            String orgNm = file.getOriginalFilename();
+            String extension = getExtension(orgNm);
             String uuid = UUID.randomUUID().toString();
-            File saveFile = new File(uploadPath, uuid);
+            String saveNm = uuid + extension;
+
+            FileVO fileVO = new FileVO();
+            File saveFile = new File(uploadPath, saveNm);
 
             try {
                 file.transferTo(saveFile);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
             fileVO.setFileId(uuid);
-            fileVO.setFileOrgNm(file.getOriginalFilename()); 
-            fileVO.setFileSaveNm(uuid); 
+            fileVO.setFileOrgNm(orgNm);
+            fileVO.setFileSaveNm(saveNm);
             fileVO.setFileSize(file.getSize());
             fileVO.setFilePath(uploadFolder + "/" + getFolder());
             fileList.add(fileVO);
@@ -65,18 +69,22 @@ public class FileUploadServiceImpl {
 
     public String getFolder() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-
         Date date = new Date();
         String str = sdf.format(date);
-
         return str;
+    }
+
+    public String getExtension(String fileOrgNm) {
+        String extension = fileOrgNm.substring(fileOrgNm.lastIndexOf("."));
+        return extension;
     }
     
     public void fileDownload(String fileId, HttpServletResponse response){
     	FileVO fileVO = postDao.getFileById(fileId);
     	String filename = fileVO.getFileOrgNm();
     	File file = new File(fileVO.getFilePath(), fileVO.getFileSaveNm());
-    	String encodedFileName;
+        String encodedFileName;
+
 		try {
 			encodedFileName = new String(filename.getBytes("UTF-8"), "ISO-8859-1");
 			response.setContentType("application/download");
@@ -94,17 +102,20 @@ public class FileUploadServiceImpl {
 		}
     }
     
-    public ResponseEntity<byte[]> preview(FileVO fileVO) { //이미지 리사이징...(라이브러리)
-    	File file = new File(fileVO.getFilePath() + "\\" + fileVO.getFileSaveNm());
-    	ResponseEntity<byte[]> fileBytEntity = null;
-    	try {
-    		HttpHeaders headers = new HttpHeaders();
-    		headers.add("Content-Type", Files.probeContentType(file.toPath()));
-    		fileBytEntity = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK);
+    public void preview(FileVO fileVO, HttpServletResponse response) {
+        File file = new File(fileVO.getFilePath(), fileVO.getFileSaveNm());
+        try {
+            String contentType = Files.probeContentType(file.toPath());
+            if (contentType != null && contentType.startsWith("image")) { //이미지 일 때만
+                response.setContentType(contentType);
+
+                Thumbnails.of(file)
+                        .size(100, 100)
+                        .outputQuality(0.8)
+                        .toOutputStream(response.getOutputStream());
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	
-		return fileBytEntity;
 	}
 }
