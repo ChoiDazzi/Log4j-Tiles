@@ -33,12 +33,14 @@ public class BoardController {
 	public String getBoard(@PathVariable String boardId,
 						   @RequestParam(defaultValue = "1") int pageNum,
 						   @RequestParam(defaultValue = "10") int pageSize,
+						   BoardVO boardVO,
 						   Model model) {
-		PageInfo<PostVO> pageInfo = boardService.getAllPostByBoard(boardId, pageNum, pageSize);
+		System.out.println("boardId = " + boardId);
+		System.out.println("boardVO = " + boardVO);
+		PageInfo<PostVO> pageInfo = boardService.getAllPostByBoard(boardVO, pageNum, pageSize);
 		model.addAttribute("boardNm", postService.getNavNm(boardId));
 		model.addAttribute("posts", pageInfo.getList());
 		model.addAttribute("pageInfo", pageInfo);
-
 		return "board/board.main";
 	}
 

@@ -30,7 +30,7 @@
         <nav class="pagenation">
             <li>
                 <c:if test="${pageInfo.hasPreviousPage}">
-                    <a href="/board/board/${boardId}?pageNum=${pageInfo.prePage}" class="pageBtn pageTextBtn">Prev</a>
+                    <a href="/board/board/${boardId}?pageNum=${pageInfo.prePage}&type=${param.type}&keyword=${param.keyword}" class="pageBtn pageTextBtn">Prev</a>
                 </c:if>
             </li>
 
@@ -41,7 +41,7 @@
                             <span class="pageBtn active">${pageNum}</span>
                         </c:when>
                         <c:otherwise>
-                            <a href="?pageNum=${pageNum}" class="pageBtn">${pageNum}</a>
+                            <a href="?pageNum=${pageNum}&type=${param.type}&keyword=${param.keyword}" class="pageBtn">${pageNum}</a>
                         </c:otherwise>
                     </c:choose>
                 </li>
@@ -49,10 +49,23 @@
 
             <li>
                 <c:if test="${pageInfo.hasNextPage}">
-                    <a href="/board/board/${boardId}?pageNum=${pageInfo.nextPage}" class="pageBtn pageTextBtn">Next</a>
+                    <a href="/board/board/${boardId}?pageNum=${pageInfo.nextPage}&type=${param.type}&keyword=${param.keyword}" class="pageBtn pageTextBtn">Next</a>
                 </c:if>
             </li>
         </nav>
+    </div>
+
+    <div class="search-content">
+        <form action="/board/board/${boardId}" method="get">
+            <select name="type">
+                <option value="">전체</option>
+                <option value="postTtl">제목</option>
+                <option value="postCnt">내용</option>
+                <option value="userNm">작성자</option>
+            </select>
+            <input type="text" name="keyword" />
+            <button type="submit">검색</button>
+        </form>
     </div>
 </div>
 

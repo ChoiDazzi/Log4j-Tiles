@@ -17,4 +17,7 @@ public class BoardVO {
     private String updtDt;		// 수정 일시
     private String updtId;		// 수정 아이디
     private char delYn;			// 삭제 여부
+
+    private String type;        // 검색 타입
+    private String keyword;     // 검색 키워드
 }
