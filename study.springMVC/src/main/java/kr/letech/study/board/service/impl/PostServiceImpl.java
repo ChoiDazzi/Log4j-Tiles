@@ -4,12 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import kr.letech.study.board.vo.FileVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.letech.study.board.dao.PostDAO;
 import kr.letech.study.board.service.PostService;
+import kr.letech.study.board.vo.FileVO;
 import kr.letech.study.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
 

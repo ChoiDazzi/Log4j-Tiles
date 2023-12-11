@@ -1,5 +1,9 @@
 package kr.letech.study.board.service.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -8,13 +12,6 @@ import kr.letech.study.board.service.BoardService;
 import kr.letech.study.board.vo.BoardVO;
 import kr.letech.study.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
