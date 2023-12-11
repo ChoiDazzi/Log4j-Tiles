@@ -31,7 +31,7 @@ public class BoardController {
 		return boardService.getNavItems();
 	}
 
-	@GetMapping("/board/board")
+	@GetMapping("/")
 	public String getMain() {
 		return "board/boardMain.main";
 	}

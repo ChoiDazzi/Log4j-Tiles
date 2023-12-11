@@ -19,19 +19,19 @@ public class LoginController {
 	
 	@GetMapping("/login")
 	public String getLogin() {
-		return "login/login.main";
+		return "login/login.ss";
 	}
 
 	@GetMapping("/signIn")
 	public String getSignIn(Model model) {
 		model.addAttribute("auths",userLoginService.getAllAuth());
-		return "login/signIn.main";	
+		return "login/signIn.ss";
 	}
-	
+
 	@PostMapping("/signIn")
 	public String signIn(UserVO userVO, @RequestParam List<String> authId) {
 		userLoginService.signIn(userVO, authId);
 		return "redirect:/login";
 	}
-	
+
 }
