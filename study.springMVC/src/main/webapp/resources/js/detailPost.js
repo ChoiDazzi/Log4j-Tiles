@@ -47,6 +47,8 @@ modifyBtn.addEventListener("click", () => {
             success: function() {
 				after.style.display = "none";
     			before.style.display = "block";
+                inputTitle.setAttribute("readonly");
+                content.setAttribute("readonly");
 			},
             error: function (xhr) {
                 console.log(xhr.status);

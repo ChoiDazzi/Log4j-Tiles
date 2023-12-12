@@ -8,5 +8,6 @@ backBtn.addEventListener("click", () => {
 });
 
 registerPost.addEventListener("click", () => {
+  // console.log(frm.getAttribute("postTtl"));
   frm.submit();
 })

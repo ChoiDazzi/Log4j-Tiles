@@ -1,32 +1,30 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ChoiSeoYeon
-  Date: 12/3/23
-  Time: 11:57 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="${CONTEXT_PATH}/resources/css/registerPost.css">
 <c:set var="userId" value="${pageContext.request.userPrincipal.name}" />
 <c:set var="postId" value="${postInfo.postId}" />
-<div class="wrapper">
-    <div class="header-content">
-        <h3 id="boardNm" data-id="${boardId}">${boardNm} - 게시글 상세</h3>
-        <div class="btn-content">
-            <button id="backBtn" type="button">목록으로</button>
+    <div>
+        <div>
+            <h4 class="fw-bold py-3 mb-3 mt-5" id="boardNm" data-id="<c:out value="${boardId}"/>">
+            <span class="text-muted fw-normal"> <c:out value="${boardNm}" />/</span>
+            게시글 상세
+            </h4>
+        </div>
+        <div class="row flex-nowrap">
+            <button id="backBtn" type="button" class="btn btn-outline-info">목록으로</button>
             <c:if test="${userId eq postInfo.userId}">
                 <div class="before">
-                    <button id="modify" type="button">수정하기</button>
-                    <button id="deleteBtn" type="submit">삭제하기</button>
+                    <button id="modify" type="button" class="btn btn-info">수정하기</button>
+                    <button id="deleteBtn" type="submit" class="btn btn-danger">삭제하기</button>
                 </div>
                 <div class="after" style="display: none">
-                    <button id="modifyBtn" type="button">저장하기</button>
-                    <button id="cancelBtn" type="button">취소</button>
+                    <button id="modifyBtn" type="button" class="btn btn-primary">저장하기</button>
+                    <button id="cancelBtn" type="button" class="btn btn-outline-primary">취소</button>
                 </div>
             </c:if>
         </div>
     </div>
+
     <div class="form-content">
         <form id="frm" enctype="multipart/form-data">
             <input type="hidden" value="<c:out value="${postInfo.postId}"/>" name="postId"/>
@@ -85,5 +83,58 @@
     	<div id="comment-body"></div>
     </div> --%>
 </div>
+
+<div>
+
+    <div class="card mb-4">
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="mb-0">게시글 등록</h5>
+        <div>
+        <button id="backBtn" type="button" class="btn btn-outline-info">목록으로</button>
+            <c:if test="${userId eq postInfo.userId}">
+                <div class="before">
+                    <button id="modify" type="button" class="btn btn-info">수정하기</button>
+                    <button id="deleteBtn" type="submit" class="btn btn-danger">삭제하기</button>
+                </div>
+                <div class="after" style="display: none">
+                    <button id="modifyBtn" type="button" class="btn btn-primary">저장하기</button>
+                    <button id="cancelBtn" type="button" class="btn btn-outline-primary">취소</button>
+                </div>
+            </c:if>
+        </div>
+    </div>
+    <div class="card-body">
+        <form action="/post/registerPost" id="frm" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="boardId" value="${boardId}">
+            <input type="hidden" value="<c:out value="${postInfo.postId}"/>" name="postId"/>
+            <input type="hidden" value="<c:out value="${boardId}"/>" name="boardId"/>
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label" for="basic-default-title">제목</label>
+                <div class="col-sm-11">
+                <input type="text" name="postTtl" class="form-control" id="basic-default-title" value="<c:out value="${postInfo.postTtl}"/>" readonly />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label">날짜</label>
+                <div class="col-sm-11">
+                ${currentTime}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label" for="formFileMultiple">파일</label>
+                <div class="col-sm-11">
+                <div class="input-group input-group-merge">
+                    <input class="form-control" name="multiUpload" type="file" id="formFileMultiple" multiple="">
+                </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label" for="basic-default-content">내용</label>
+                <div class="col-sm-11">
+                <textarea cols="30" rows="10" name="postCnt" id="basic-default-content" class="form-control" placeholder="내용을 입력해주세요." aria-label="내용을 입력해주세요."></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
 
 <script src="${CONTEXT_PATH}/resources/js/detailPost.js"></script>

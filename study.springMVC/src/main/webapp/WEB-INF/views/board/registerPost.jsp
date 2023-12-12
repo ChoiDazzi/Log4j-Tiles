@@ -8,29 +8,6 @@
       게시글 등록
     </h4>
   </div>
-  <div>
-    <form action="/post/registerPost" id="frm" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="boardId" value="${boardId}">
-      <table>
-        <tr>
-          <td>제목</td>
-          <td><input type="text" name="postTtl"></td>
-        </tr>
-        <tr>
-          <td>날짜</td>
-          <td>${currentTime}</td>
-        </tr>
-        <tr>
-          <td>첨부파일</td>
-          <td><input type="file" name="multiUpload" multiple></td>
-        </tr>
-        <tr>
-          <td>내용</td>
-          <td><textarea name="postCnt" cols="30" rows="10"></textarea></td>
-        </tr>
-      </table>
-    </form>
-  </div>
 </div>
 
 <div class="card mb-4">
@@ -60,7 +37,7 @@
         <label class="col-sm-1 col-form-label" for="formFileMultiple">파일</label>
         <div class="col-sm-11">
           <div class="input-group input-group-merge">
-            <input class="form-control" name="multiUpload"  type="file" id="formFileMultiple" multiple="">
+            <input class="form-control" name="multiUpload" type="file" id="formFileMultiple" multiple="">
           </div>
         </div>
       </div>
