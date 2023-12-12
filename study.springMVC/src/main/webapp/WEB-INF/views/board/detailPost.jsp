@@ -115,6 +115,12 @@
                 </div>
             </div>
             <div class="row mb-3">
+                <label class="col-sm-1 col-form-label" for="basic-default-title">작성자</label>
+                <div class="col-sm-11">
+                    <c:out value="${postInfo.userNm}"/>
+                </div>
+            </div>
+            <div class="row mb-3">
                 <label class="col-sm-1 col-form-label">날짜</label>
                 <div class="col-sm-11">
                 ${currentTime}
