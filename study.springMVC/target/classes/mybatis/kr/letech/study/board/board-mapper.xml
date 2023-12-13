@@ -64,6 +64,10 @@
                              , DEL_YN)
         VALUES ( #{boardId}
                , #{boardNm}
-               , #{rgstId})
+               , NOW()
+               , #{rgstId}
+               , NOW()
+               , #{updtId}
+               , 'N')
     </insert>
 </mapper>

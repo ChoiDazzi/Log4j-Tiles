@@ -54,7 +54,12 @@ public class BoardController {
 		return "board/manageBoard.main";
 	}
 	
-	@PostMapping("/board/insertBoard")
+	/**
+	 * 게시판 등록
+	 * @param boardNm
+	 * @param principal
+	 */
+	@PostMapping("/boards")
 	public String insertBoard(String boardNm, Principal principal) {
 		boardService.insertBoard(boardNm, principal.getName());
 		return "redirect:/board/manageBoard";

@@ -40,7 +40,7 @@
 	</div>
 	<div class="col-md-6">
 	  <div class="card mb-4">
-		  <form action="/board/insertBoard" method="post">
+		  <form action="/boards" method="post">
 		    <h5 class="card-header">게시판 등록</h5>
 		    <div class="card-body row">
 		        <label for="defaultFormControlInput" class="form-label">게시판 이름</label>
