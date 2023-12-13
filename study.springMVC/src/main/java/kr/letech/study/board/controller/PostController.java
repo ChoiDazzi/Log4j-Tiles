@@ -1,6 +1,7 @@
 package kr.letech.study.board.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +48,7 @@ public class PostController {
 	public String registerPost(@ModelAttribute PostVO postVO,
 							   @RequestParam("multiUpload") List<MultipartFile> files, 
 							   Principal principal) {
+		System.out.println("postVO = " + postVO);
 		String userId = principal.getName();
 		postService.insertPost(postVO, userId, files);
 		return "redirect:/board/board/" + postVO.getBoardId();
@@ -67,8 +69,9 @@ public class PostController {
 
 	@ResponseBody
 	@PostMapping("/post/modifyPost")
-	public void modifyPost(PostVO postVO, Principal principal) {
-		postService.modifyPost(postVO, principal.getName());
+	public void modifyPost(@ModelAttribute PostVO postVO, Principal principal) {
+		System.out.println("postVO = " + postVO);
+//		postService.modifyPost(postVO, principal.getName());
 	}
 
 	@ResponseBody

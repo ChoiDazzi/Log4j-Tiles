@@ -75,19 +75,19 @@
 	                                           <div class="me-3">
 	                                               <a href='/post/fileDownload/<c:out value="${file.fileId}"/>' class="me-1">${file.fileOrgNm}</a>
 	                                               <em class="text-muted small">${file.fileSize} byte</em>
-	                                               <span class="badge bg-label-danger d-none deleteFileBtn">X</span>
+	                                               <span class="badge bg-label-danger d-none deleteFileBtn" onclick="fn_deleteFile(this)" data-id="<c:out value="${file.fileId}"/>" >X</span>
 	                                           </div>
 	                                       </c:forEach>
 	                                   </button>
 	                               </h2>
 	                               <div id="accordionOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample" style="">
 	                                   <div class="accordion-body">
-	                                       <c:forEach items="${files}" var="file">
-	                                           <!-- 사진 들어가는 자리 -->
+                                           <!-- 사진 들어가는 자리 -->
+                                           <c:forEach items="${files}" var="file">
 	                                           <img alt="" src="<%=request.getContextPath()%>/post/preview?fileId=<c:out value="${file.fileId}"/>">
 	                                       </c:forEach>
-	                                       </div>
-	                                   </div>
+                                       </div>
+                                   </div>
 	                           </c:when>
                             </c:choose>
                         </div>

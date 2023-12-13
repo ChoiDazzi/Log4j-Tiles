@@ -44,5 +44,4 @@
 	    </beans:property>
 	</beans:bean>
 	<context:property-placeholder location="classpath:application.properties, classpath:application-${spring.profiles.active}.properties"/>
-	
 </beans:beans>

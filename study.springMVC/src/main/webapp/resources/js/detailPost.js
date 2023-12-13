@@ -41,6 +41,21 @@ fn_modifyDnone = () => {
 	})
 }
 
+fn_deleteFile = (element) => {
+    let parentDiv = element.closest('.me-3');
+    parentDiv.remove();
+}
+
+fn_getFileNames = () => {
+    let deleteFileBtns = document.querySelectorAll('.deleteFileBtn');
+    let fileIdList = [];
+    deleteFileBtns.forEach(deleteFileBtn => {
+        let fileId = deleteFileBtn.getAttribute('data-id');
+        fileIdList.push(fileId);
+    });
+    return fileIdList;
+}
+
 backBtn.addEventListener('click', () => {
     location.href = `/board/board/${boardId}`;
 });
@@ -56,8 +71,11 @@ cancelBtn.addEventListener('click', () => {
 });
 
 modifyBtn.addEventListener('click', () => {
+    let fileNameList = fn_getFileNames();
     let frm = document.querySelector('#frm');
     let postVO = new FormData(frm);
+    postVO.append("fileNameList", fileNameList);
+
     if (confirm('수정하시겠습니까?')) {
         $.ajax({
             url: '/post/modifyPost',
