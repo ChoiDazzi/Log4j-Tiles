@@ -4,7 +4,6 @@ fn_modifyBoard = (id) => {
 		"boardId": id,
 		"boardNm": nm
 	}
-	console.log(boardVO)
 	$.ajax({
 		url: '/board/modifyBoard',
 		type: 'post',
