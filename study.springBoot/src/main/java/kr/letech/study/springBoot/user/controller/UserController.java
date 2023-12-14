@@ -32,30 +32,50 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class UserController {
-	
+
 	private final UserService userService;
-	
+
+	/**
+	 * 사용자 목록 조회
+	 * @return 사용자 목록
+	 */
 	@GetMapping("/api/v1/users")
 	public ResponseEntity<List<Users>> getUserList() {
 		List<Users> userList = userService.getUserList();
 		return ResponseEntity.ok(userList);
 	}
-	
+
+	/**
+	 * 사용자 정보 조회
+	 * @param userId 사용자 아이디
+	 * @return 특정 사용자 정보
+	 */
 	@GetMapping("/api/v1/users/{userId}")
-	public ResponseEntity<Users> getUser(@PathVariable("userId") Long userId) {
+	public ResponseEntity<Users> getUser(@PathVariable("userId") String userId) {
 		Users user = userService.getUser(userId);
 		return ResponseEntity.ok(user);
 	}
-	
+
+	/**
+	 * 사용자 회원가입
+	 * @param usersDTO
+	 * @return
+	 */
 	@PostMapping("/api/v1/users")
 	public ResponseEntity<Users> insertUser(UsersDTO usersDTO) {
 		Users user = userService.insertUser(usersDTO);
 		return ResponseEntity.ok(user);
 	}
-	
+
+	/**
+	 * 비밀번호 수정
+	 * @param userId
+	 * @param userPw
+	 * @return
+	 */
 	@PutMapping("/api/v1/users")
-	public ResponseEntity<Users> modifyUser(UsersDTO usersDTO) {
-		Users user = userService.updateUser(usersDTO);
+	public ResponseEntity<Users> modifyUser(String userId, String userPw) {
+		Users user = userService.updateUser(userId, userPw);
 		return ResponseEntity.ok(user);
 	}
 }

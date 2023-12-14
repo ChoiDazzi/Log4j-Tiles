@@ -33,7 +33,7 @@ public interface UserService {
 	 * @param userId
 	 * @return
 	 */
-	Users getUser(Long userId);
+	Users getUser(String userId);
 	
 	/**
 	 * 사용자 등록
@@ -41,6 +41,12 @@ public interface UserService {
 	 * @return
 	 */
 	Users insertUser(UsersDTO usersDTO);
-	
-	Users updateUser(UsersDTO usersDTO);
+
+	/**
+	 * 사용자 비밀번호 변경
+	 * @param userId
+	 * @param userPw
+	 * @return
+	 */
+	Users updateUser(String userId, String userPw);
 }

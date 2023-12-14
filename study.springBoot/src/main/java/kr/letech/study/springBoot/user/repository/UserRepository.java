@@ -22,5 +22,10 @@ import kr.letech.study.springBoot.user.entity.Users;
 
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long> {
-
+    /**
+     * 사용자 아이디로 사용자 정보
+     * @param userId
+     * @return
+     */
+    Users findByUserId(String userId);
 }
