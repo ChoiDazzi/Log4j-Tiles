@@ -22,13 +22,10 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/api/v1/users/**").permitAll()
                 .and()
                 .formLogin()
                 .usernameParameter("userId")
                 .passwordParameter("userPw")
-                .loginPage("/api/v1/login")
-//                .loginProcessingUrl("/api/v1/login")
                 .and()
                 .headers().frameOptions().sameOrigin();
         return http.build();
