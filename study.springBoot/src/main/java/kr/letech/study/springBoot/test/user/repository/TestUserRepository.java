@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import kr.letech.study.springBoot.test.user.entity.TestUser;
 
 @Repository
-public interface TestUserRepository extends JpaRepository<TestUser, Long>{
+public interface TestUserRepository extends JpaRepository<TestUser, Long> {
 
 }

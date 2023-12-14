@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class TestUserCotroller {
 	
 	private final TestUserService userService;
-	
+	 
 	@GetMapping("/api/v1/test/users")
 	public ResponseEntity<List<TestUser>> list() {
 		List<TestUser> result = this.userService.selectUserList();

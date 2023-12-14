@@ -8,5 +8,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class TestUserDTO { //Data Transfer Object: 데이터를 전송해주는 객체 
-	private String userNm;
+	private String userNm; 
 }

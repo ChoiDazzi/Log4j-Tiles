@@ -21,6 +21,4 @@ public class TestUser {
 	private long ID;
 	
 	private String username;
-	
-	
 }

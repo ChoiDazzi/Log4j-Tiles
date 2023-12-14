@@ -49,7 +49,6 @@ public class PostController {
 	public String registerPost(@ModelAttribute PostVO postVO,
 							   @RequestParam("multiUpload") List<MultipartFile> files, 
 							   Principal principal) {
-		System.out.println("postVO = " + postVO);
 		String userId = principal.getName();
 		postService.insertPost(postVO, userId, files);
 		return "redirect:/board/board/" + postVO.getBoardId();

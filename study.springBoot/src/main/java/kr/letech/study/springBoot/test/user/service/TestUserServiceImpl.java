@@ -28,7 +28,6 @@ public class TestUserServiceImpl implements TestUserService{
 		} else {
 			return result.get();
 		}
-		
 	}
 
 	@Override
