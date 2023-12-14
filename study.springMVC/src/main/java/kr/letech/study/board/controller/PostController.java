@@ -1,32 +1,33 @@
 package kr.letech.study.board.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import kr.letech.study.board.service.BoardService;
-import kr.letech.study.board.service.PostService;
-import kr.letech.study.board.service.impl.FileUploadServiceImpl;
-import kr.letech.study.board.vo.BoardVO;
-import kr.letech.study.board.vo.FileVO;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.letech.study.board.service.BoardService;
+import kr.letech.study.board.service.FileService;
+import kr.letech.study.board.service.PostService;
+import kr.letech.study.board.vo.BoardVO;
+import kr.letech.study.board.vo.FileVO;
 import kr.letech.study.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequiredArgsConstructor
 public class PostController {
-	
 	private final PostService postService;
-	private final FileUploadServiceImpl fileuploadService; 
+	private final FileService fileService; 
 	private final BoardService boardService;
 	
 	@ModelAttribute("navItems")
@@ -58,7 +59,7 @@ public class PostController {
 	public String detailPost(@PathVariable String boardId, 
 							 @PathVariable String postId, 
 							 Model model) {
-		List<FileVO> files = postService.getFileByPost(postId);
+		List<FileVO> files = fileService.getFileByPost(postId);
 		String boardNm = postService.getNavNm(boardId);
 		PostVO postInfo = postService.getPost(postId);
 		model.addAttribute("files", files);
@@ -69,9 +70,12 @@ public class PostController {
 
 	@ResponseBody
 	@PostMapping("/post/modifyPost")
-	public void modifyPost(@ModelAttribute PostVO postVO, Principal principal) {
-		System.out.println("postVO = " + postVO);
-//		postService.modifyPost(postVO, principal.getName());
+	public void modifyPost(@ModelAttribute PostVO postVO, 
+						   @RequestParam String deleteFileIdList,
+						   @RequestParam("multiUpload") List<MultipartFile> files,
+						   Principal principal) {
+		String updtId = principal.getName();
+		postService.modifyPost(postVO, deleteFileIdList, files, updtId);
 	}
 
 	@ResponseBody
@@ -82,13 +86,13 @@ public class PostController {
 	
 	@GetMapping("/post/fileDownload/{fileId}")
 	public void fileDownload(@PathVariable String fileId, HttpServletResponse response){
-		fileuploadService.fileDownload(fileId, response);
+		fileService.fileDownload(fileId, response);
 	}
 
 	@ResponseBody
 	@GetMapping("/post/preview")
 	public void preview(String fileId, HttpServletResponse response) {
-		FileVO fileVO = postService.getFileById(fileId);
-		fileuploadService.preview(fileVO, response);
+		FileVO fileVO = fileService.getFileById(fileId);
+		fileService.preview(fileVO, response);
 	}
 }

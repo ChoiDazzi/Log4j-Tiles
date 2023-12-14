@@ -73,7 +73,7 @@
 	                                   <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="false" aria-controls="accordionOne">
 	                                       <c:forEach items="${files}" var="file">
 	                                           <div class="me-3">
-	                                               <a href='/post/fileDownload/<c:out value="${file.fileId}"/>' class="me-1">${file.fileOrgNm}</a>
+	                                               <a href='/post/fileDownload/<c:out value="${file.fileId}"/>' class="me-1 a-tag">${file.fileOrgNm}</a>
 	                                               <em class="text-muted small">${file.fileSize} byte</em>
 	                                               <span class="badge bg-label-danger d-none deleteFileBtn" onclick="fn_deleteFile(this)" data-id="<c:out value="${file.fileId}"/>" >X</span>
 	                                           </div>

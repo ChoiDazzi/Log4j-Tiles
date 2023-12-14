@@ -21,6 +21,4 @@ public class PostVO {
     private String rgstId;		// 등록 아이디
     private String updtDt;		// 수정 일시
     private String updtId;		// 수정 아이디
-
-    private List<String> fileNameList;
 }

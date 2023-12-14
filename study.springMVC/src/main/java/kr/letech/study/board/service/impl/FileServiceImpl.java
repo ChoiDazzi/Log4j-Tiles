@@ -19,18 +19,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.letech.study.board.dao.PostDAO;
+import kr.letech.study.board.dao.FileDAO;
+import kr.letech.study.board.service.FileService;
 import kr.letech.study.board.vo.FileVO;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Service
 @RequiredArgsConstructor
-public class FileUploadServiceImpl {
+public class FileServiceImpl implements FileService{
     @Value("${file.directory}")
     private String uploadFolder;
-    
-    private final PostDAO postDao;
+    private final FileDAO fileDao;
 
     public List<FileVO> uploadFile(List<MultipartFile> files) {
         List<FileVO> fileList = new ArrayList<>();
@@ -42,8 +42,9 @@ public class FileUploadServiceImpl {
         for (MultipartFile file : files) {
             String orgNm = file.getOriginalFilename();
             String extension = getExtension(orgNm);
-            String uuid = UUID.randomUUID().toString();
-            String saveNm = uuid + extension;
+            String fileId = UUID.randomUUID().toString();
+            String uuidSaveNm = UUID.randomUUID().toString();
+            String saveNm = uuidSaveNm + extension;
 
             FileVO fileVO = new FileVO();
             File saveFile = new File(uploadPath, saveNm);
@@ -53,7 +54,7 @@ public class FileUploadServiceImpl {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            fileVO.setFileId(uuid);
+            fileVO.setFileId(fileId);
             fileVO.setFileOrgNm(orgNm);
             fileVO.setFileSaveNm(saveNm);
             fileVO.setFileSize(file.getSize());
@@ -77,7 +78,7 @@ public class FileUploadServiceImpl {
     }
     
     public void fileDownload(String fileId, HttpServletResponse response){
-    	FileVO fileVO = postDao.getFileById(fileId);
+    	FileVO fileVO = fileDao.getFileById(fileId);
     	String filename = fileVO.getFileOrgNm();
     	File file = new File(fileVO.getFilePath(), fileVO.getFileSaveNm());
         String encodedFileName;
@@ -115,4 +116,25 @@ public class FileUploadServiceImpl {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public FileVO getFileById(String fileId) {
+		return fileDao.getFileById(fileId);
+	}
+
+	@Override
+	public List<FileVO> getFileByPost(String postId) {
+		return fileDao.getFileByPost(postId);
+	}
+
+	@Override
+	public void insertFile(FileVO fileVO) {
+		fileDao.insertFile(fileVO);
+	}
+
+	@Override
+	public void deleteFIle(FileVO fileVO) {
+		fileDao.deleteFile(fileVO);
+	}
+
 }

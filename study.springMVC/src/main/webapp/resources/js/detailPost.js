@@ -12,6 +12,8 @@ let after = document.querySelector('.after');
 let modifyFileDiv = document.querySelector('#modifyFileDiv');
 let accordionBody = document.querySelector('#accordionOne');
 let deleteFileBtns = document.querySelectorAll('.deleteFileBtn');
+let accordionBtn = document.querySelector('.accordion-button');
+let deleteFileIdList = [];
 
 fn_active = () => {
 	after.style.display = 'block';
@@ -44,17 +46,16 @@ fn_modifyDnone = () => {
 fn_deleteFile = (element) => {
     let parentDiv = element.closest('.me-3');
     parentDiv.remove();
+    deleteFileIdList.push(element.getAttribute('data-id'));
 }
 
-fn_getFileNames = () => {
-    let deleteFileBtns = document.querySelectorAll('.deleteFileBtn');
-    let fileIdList = [];
-    deleteFileBtns.forEach(deleteFileBtn => {
-        let fileId = deleteFileBtn.getAttribute('data-id');
-        fileIdList.push(fileId);
-    });
-    return fileIdList;
-}
+accordionBtn.addEventListener('click', (e) => {
+	target = e.target;
+	if(target.classList.contains('a-tag')) {
+		url = target.getAttribute('href');
+		location.href = url;
+	}
+});
 
 backBtn.addEventListener('click', () => {
     location.href = `/board/board/${boardId}`;
@@ -71,10 +72,9 @@ cancelBtn.addEventListener('click', () => {
 });
 
 modifyBtn.addEventListener('click', () => {
-    let fileNameList = fn_getFileNames();
     let frm = document.querySelector('#frm');
-    let postVO = new FormData(frm);
-    postVO.append("fileNameList", fileNameList);
+    let data = new FormData(frm);
+    data.append("deleteFileIdList", JSON.stringify(deleteFileIdList));
 
     if (confirm('수정하시겠습니까?')) {
         $.ajax({
@@ -82,11 +82,9 @@ modifyBtn.addEventListener('click', () => {
             type: 'post',
             processData:false,
             contentType:false,
-            data: postVO,
+            data: data,
             success: function() {
-				fn_inactive();
-                fn_setAttr();
-                modifyFileDiv.style.display = 'none';
+				location.href = `/post/detailPost/${boardId}/${postId}`;
 			},
             error: function (xhr) {
                 console.log(xhr.status);

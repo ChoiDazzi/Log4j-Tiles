@@ -7,7 +7,12 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.letech.study.board.dao.FileDAO;
 import kr.letech.study.board.dao.PostDAO;
+import kr.letech.study.board.service.FileService;
 import kr.letech.study.board.service.PostService;
 import kr.letech.study.board.vo.FileVO;
 import kr.letech.study.board.vo.PostVO;
@@ -17,7 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService{
 	private final PostDAO postDao; 
-	private final FileUploadServiceImpl fileUploadService;
+	private final FileDAO fileDao;
+	private final FileService fileService;
 
 	@Override
 	public String getNavNm(String boardId) {
@@ -38,36 +44,48 @@ public class PostServiceImpl implements PostService{
 		postDao.insertPost(postVO);
 		String postId = postVO.getPostId();
 		if (files.get(0).getSize() != 0) {
-			List<FileVO> fileVOList = fileUploadService.uploadFile(files);
+			List<FileVO> fileVOList = fileService.uploadFile(files);
 			for (FileVO fileVO : fileVOList) {
 				fileVO.setRgstId(userId);
 				fileVO.setPostId(postId);
-				postDao.insertFile(fileVO);
+				fileDao.insertFile(fileVO);
 			}
 		}
 	}
 
 	@Override
-	public void modifyPost(PostVO postVO, String userId) {
-		postVO.setUpdtId(userId);
+	public void modifyPost(PostVO postVO, String deleteFileIdList, List<MultipartFile> files, String updtId) {
+		postVO.setUpdtId(updtId);
+		// 게시글 수정 
 		postDao.modifyPost(postVO);
+		// 파일 수정 - 파일 삭제 
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			String[] fileList = objectMapper.readValue(deleteFileIdList, String[].class);
+			FileVO fileVO = new FileVO();
+			fileVO.getUpdtId();
+			for (String fileId : fileList) {
+				fileVO.setFileId(fileId);
+				//파일 삭제 
+				fileDao.deleteFile(fileVO);
+				
+			}
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		// 파일 수정 - 파일 등록
+		List<FileVO> fileList = fileService.uploadFile(files);
+		for (FileVO fileVO : fileList) {
+			fileVO.setUpdtId(updtId);
+			fileVO.setPostId(postVO.getPostId());
+			fileService.insertFile(fileVO);
+		}
 		
 	}
 
 	@Override
 	public void deletePost(String postId) {
 		postDao.deletePost(postId);
-	}
-	
-	@Override
-	public List<FileVO> getFileByPost(String postId) {
-		return postDao.getFileByPost(postId);
-	}
-	
-
-	@Override
-	public FileVO getFileById(String fileId) {
-		return postDao.getFileById(fileId);
 	}
 	
 	@Override
