@@ -36,8 +36,7 @@
 	rel="stylesheet" />
 
 <!-- Icons. Uncomment required icon fonts -->
-<link rel="stylesheet"
-	href="${RESOURCES_PATH}/assets/vendor/fonts/boxicons.css" />
+<link rel="stylesheet" href="${RESOURCES_PATH}/assets/vendor/fonts/boxicons.css" />
 
 <!-- Core CSS -->
 <link rel="stylesheet"
@@ -113,6 +112,7 @@
 	<script src="${RESOURCES_PATH}/assets/js/dashboards-analytics.js"></script>
 
 	<!-- Place this tag in your head or just before your close body tag. -->
+	<!-- async: 비동기, defer: 마지막에 읽기 -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 

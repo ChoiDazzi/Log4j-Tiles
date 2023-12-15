@@ -22,13 +22,8 @@ public class LoginController {
     public ResponseEntity<String> login(String userId, String userPw) throws AuthenticationException {
         // 인증을 위한 토큰 생성
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userId, userPw);
-		
-		// 인증을 수행하고 결과를 받음
 		Authentication result = authenticationProvider.authenticate(authentication);
-		
-		// SecurityContext에 인증 정보 설정
 		SecurityContextHolder.getContext().setAuthentication(result);
-		
 		return ResponseEntity.ok("Login Success");
     }
 }

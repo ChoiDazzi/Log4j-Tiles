@@ -60,5 +60,17 @@ public class UserServiceImpl implements UserService {
 		user.setUserPw(encodedPassword);
 		return userRepository.save(user);
 	}
+	
+	//validation
+	
+	//세션 저장시 상수로 빼서 저장하면 편리함
+	
+	//상세조회도 delYN sql query 에 추가
+	
+	//e.printTrace ... 쓰면 안 됨 
+	
+	//생길 수 있는 오류 생각해야 함
+	
+	// try/catch -> finally 필수 
 
 }

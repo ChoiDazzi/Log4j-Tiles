@@ -21,7 +21,7 @@
          WHERE TP.BOARD_ID = #{boardId}
            AND TP.DEL_YN = 'N'
          <choose>
-            <when test="type != null and type.equals('postTtl')">
+            <when test="type != null and type.equals('postTtl')"> <!-- equals 앞에 쓰기 / null 빼도 됨  -->
             AND TP.POST_TTL LIKE CONCAT('%', #{keyword}, '%')
             </when>
             <when test="type != null and type.equals('postCnt')">
