@@ -8,8 +8,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import kr.letech.study.springBoot.cmmn.security.service.CustomAuthenticationProvider;
+import lombok.RequiredArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     @Bean
@@ -24,6 +28,7 @@ public class SecurityConfig {
                 .antMatchers("/h2-console/**").permitAll()
                 .and()
                 .formLogin()
+                .loginProcessingUrl("/api/v1/users/login")
                 .usernameParameter("userId")
                 .passwordParameter("userPw")
                 .and()
