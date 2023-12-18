@@ -1,4 +1,4 @@
-package kr.letech.study.board.service.impl;
+package kr.letech.study.boot.board.service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,9 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.letech.study.board.dao.FileDAO;
-import kr.letech.study.board.service.FileService;
-import kr.letech.study.board.vo.FileVO;
+import kr.letech.study.boot.board.dao.FileDAO;
+import kr.letech.study.boot.board.vo.FileVO;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 

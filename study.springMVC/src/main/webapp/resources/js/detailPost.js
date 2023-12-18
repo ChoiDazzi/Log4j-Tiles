@@ -74,7 +74,7 @@ cancelBtn.addEventListener('click', () => {
 modifyBtn.addEventListener('click', () => {
     let frm = document.querySelector('#frm');
     let data = new FormData(frm);
-    data.append("deleteFileIdList", JSON.stringify(deleteFileIdList));
+    data.append("deleteFileIdList", deleteFileIdList);
 
     if (confirm('수정하시겠습니까?')) {
         $.ajax({

@@ -1,4 +1,4 @@
-package kr.letech.study.board.service.impl;
+package kr.letech.study.boot.board.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,15 +7,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import kr.letech.study.board.dao.FileDAO;
-import kr.letech.study.board.dao.PostDAO;
-import kr.letech.study.board.service.FileService;
-import kr.letech.study.board.service.PostService;
-import kr.letech.study.board.vo.FileVO;
-import kr.letech.study.board.vo.PostVO;
+import kr.letech.study.boot.board.dao.FileDAO;
+import kr.letech.study.boot.board.dao.PostDAO;
+import kr.letech.study.boot.board.vo.FileVO;
+import kr.letech.study.boot.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
 
 @Service

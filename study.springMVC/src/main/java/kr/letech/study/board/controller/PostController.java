@@ -70,11 +70,12 @@ public class PostController {
 	@ResponseBody
 	@PostMapping("/post/modifyPost")
 	public void modifyPost(@ModelAttribute PostVO postVO, 
-						   @RequestParam String deleteFileIdList,
+//						   @RequestParam String deleteFileIdList,
 						   @RequestParam("multiUpload") List<MultipartFile> files,
 						   Principal principal) {
+		System.out.println("postVO" + postVO);
 		String updtId = principal.getName();
-		postService.modifyPost(postVO, deleteFileIdList, files, updtId);
+		postService.modifyPost(postVO, files, updtId);
 	}
 
 	@ResponseBody

@@ -1,4 +1,4 @@
-package kr.letech.study.board.vo;
+package kr.letech.study.boot.board.vo;
 
 import lombok.Getter;
 import lombok.Setter;

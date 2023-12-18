@@ -1,10 +1,10 @@
-package kr.letech.study.board.service;
+package kr.letech.study.boot.board.service;
 
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.letech.study.board.vo.PostVO;
+import kr.letech.study.boot.board.vo.PostVO;
 
 public interface PostService {
 	/* select */

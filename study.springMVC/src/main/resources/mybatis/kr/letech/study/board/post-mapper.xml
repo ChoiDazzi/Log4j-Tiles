@@ -6,6 +6,7 @@
         SELECT BOARD_NM
           FROM TB_BOARD
          WHERE BOARD_ID = #{boardId}
+           AND DEL_YN = 'N'
     </select>
 
     <select id="getPost" resultType="kr.letech.study.board.vo.PostVO" parameterType="string">
@@ -19,6 +20,7 @@
           FROM TB_POST TP
          INNER JOIN TB_USER TU ON (TP.USER_ID = TU.USER_ID)
          WHERE TP.POST_ID = #{postId}
+           AND TP.DEL_YN = 'N'
          ORDER BY RGST_DT DESC
     </select>
 

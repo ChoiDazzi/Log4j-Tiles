@@ -1,4 +1,4 @@
-package kr.letech.study.springBoot;
+package kr.letech.study.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
