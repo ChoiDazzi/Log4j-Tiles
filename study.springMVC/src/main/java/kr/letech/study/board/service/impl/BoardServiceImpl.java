@@ -24,9 +24,9 @@ public class BoardServiceImpl implements BoardService {
     }
     
     @Override
-    public PageInfo<PostVO> getAllPostByBoard(BoardVO boardVO, int pageNum, int pageSize) {
+    public PageInfo<PostVO> getAllPostByBoard(String boardId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<PostVO> posts = boardDao.getAllPostByBoard(boardVO);
+        List<PostVO> posts = boardDao.getAllPostByBoard(boardId);
         return PageInfo.of(posts);
     }
 

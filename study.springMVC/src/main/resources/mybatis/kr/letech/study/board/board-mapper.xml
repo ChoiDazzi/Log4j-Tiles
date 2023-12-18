@@ -9,7 +9,7 @@
          WHERE DEL_YN = 'N'
     </select>
 
-    <select id="getAllPostByBoard" resultType="kr.letech.study.board.vo.PostVO" parameterType="kr.letech.study.board.vo.BoardVO">
+    <select id="getAllPostByBoard" resultType="kr.letech.study.board.vo.PostVO">
         SELECT TP.POST_ID
              , TP.USER_ID
              , TU.USER_NM

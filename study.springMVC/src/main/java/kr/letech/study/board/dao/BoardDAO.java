@@ -10,7 +10,7 @@ import java.util.List;
 public interface BoardDAO {
     /* select */
     List<BoardVO> getNavItems();
-    List<PostVO> getAllPostByBoard(BoardVO boardVO);
+    List<PostVO> getAllPostByBoard(String boardId);
     String getBoardSeq();
     
     /* update */
