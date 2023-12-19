@@ -10,7 +10,7 @@ import kr.letech.study.boot.board.vo.PostVO;
 public interface BoardService {
     /* select */
     List<BoardVO> getNavItems();
-    PageInfo<PostVO> getAllPostByBoard(String boardId, int pageNum, int pageSize);
+    PageInfo<PostVO> getAllPostByBoard(BoardVO boardVO, int pageNum, int pageSize);
     
     /* update */
     void modifyBoard(BoardVO boardVO, String userId);

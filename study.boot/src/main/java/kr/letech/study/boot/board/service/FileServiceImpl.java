@@ -72,7 +72,6 @@ public class FileServiceImpl implements FileService{
     }
 
     public String getExtension(String fileOrgNm) {
-    	System.out.println("dddddddddddddddddddddddddddddddddddddddddddddd"+fileOrgNm);
         String extension = fileOrgNm.substring(fileOrgNm.lastIndexOf("."));
         return extension;
     }

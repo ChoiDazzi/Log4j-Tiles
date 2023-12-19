@@ -9,7 +9,7 @@
          WHERE DEL_YN = 'N'
     </select>
 
-    <select id="getAllPostByBoard" resultType="kr.letech.study.board.vo.PostVO" parameterType="kr.letech.study.board.vo.BoardVO">
+    <select id="getAllPostByBoard" resultType="kr.letech.study.board.vo.PostVO">
         SELECT TP.POST_ID
              , TP.USER_ID
              , TU.USER_NM
@@ -21,13 +21,13 @@
          WHERE TP.BOARD_ID = #{boardId}
            AND TP.DEL_YN = 'N'
          <choose>
-            <when test="type != null and type.equals('postTtl')"> <!-- equals 앞에 쓰기 / null 빼도 됨  -->
+            <when test=" 'postTtl'.equals(type) "> 
             AND TP.POST_TTL LIKE CONCAT('%', #{keyword}, '%')
             </when>
-            <when test="type != null and type.equals('postCnt')">
+            <when test=" 'postCnt'.equals(type) ">
             AND TP.POST_CNT LIKE CONCAT('%', #{keyword}, '%')
             </when>
-            <when test="type != null and type.equals('userNm')">
+            <when test=" 'userNm'.equals(type) ">
             AND TU.USER_NM LIKE #{keyword}
             </when>
          </choose>

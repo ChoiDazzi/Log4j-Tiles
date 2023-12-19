@@ -24,6 +24,7 @@ mybatis:
 #file
 file:
   directory: local/file
+  
 # log 설정
 logging:
   level:

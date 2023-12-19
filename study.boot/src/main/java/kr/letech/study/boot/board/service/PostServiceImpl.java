@@ -59,10 +59,8 @@ public class PostServiceImpl implements PostService{
 		deleteFileVO.setUpdtId(updtId);
 		for (String fileId : deleteFileIdList) {
 			deleteFileVO.setFileId(fileId);
-			System.out.println("deleteFileVO:" + deleteFileVO);
 			fileService.deleteFIle(deleteFileVO);
 		}
-		System.out.println(files.size() != 0);
 		if (files.get(0).getSize() != 0) {
 			// 파일 수정 - 파일 등록
 			List<FileVO> fileList = fileService.uploadFile(files);

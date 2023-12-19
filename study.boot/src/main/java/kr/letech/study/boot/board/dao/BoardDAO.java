@@ -11,7 +11,7 @@ import kr.letech.study.boot.board.vo.PostVO;
 public interface BoardDAO {
     /* select */
     List<BoardVO> getNavItems();
-    List<PostVO> getAllPostByBoard(String boardId);
+    List<PostVO> getAllPostByBoard(BoardVO boardVO);
     String getBoardSeq();
     
     /* update */
