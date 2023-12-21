@@ -4,7 +4,9 @@
 package kr.letech.study.boot.board.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.letech.study.boot.board.service.FileService;
 import kr.letech.study.boot.board.service.PostService;
+import kr.letech.study.boot.board.vo.FileVO;
 import kr.letech.study.boot.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
 
@@ -57,9 +60,10 @@ public class PostController {
 	@PostMapping(value = "/api/v1/posts", 
 				 consumes = MediaType.MULTIPART_FORM_DATA_VALUE, 
 				 produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> registerPost(@ModelAttribute PostVO postVO,
+	public ResponseEntity<Void> registerPost(PostVO postVO,
 										     @RequestPart("multiUpload") List<MultipartFile> files, 
 										     Principal principal) {
+		System.out.println("con-postVO__________" + postVO);
 		String userId = principal.getName();
 		postService.insertPost(postVO, userId, files);
 		return new ResponseEntity<>(HttpStatus.CREATED);
@@ -72,11 +76,25 @@ public class PostController {
 	 * @return 게시물 상세 정보
 	 */
 	@GetMapping("/api/v1/posts/{postId}")
-	public ResponseEntity<PostVO> detailPost(@PathVariable String postId) {
-//		List<FileVO> files = fileService.getFileByPost(postId);
-//		String boardNm = postService.getNavNm(boardId);
+	public ResponseEntity<Map<String, Object>> detailPost(@PathVariable String postId) {
+		Map<String, Object> postMap = new HashMap<>();
+		List<FileVO> files = fileService.getFileByPost(postId);
 		PostVO postInfo = postService.getPost(postId);
-		return ResponseEntity.ok(postInfo);
+		
+		postMap.put("postInfo", postInfo);
+		postMap.put("fileInfo", files);
+		System.out.println(files);
+		return ResponseEntity.ok(postMap);
+	}
+	
+	/**
+	 * 게시물 미리보기
+	 * @param fileId
+	 */
+	@GetMapping("/api/v1/files/{fileId}")
+	public void preview(@PathVariable String fileId, HttpServletResponse response) {
+		FileVO fileVO = fileService.getFileById(fileId);
+		fileService.preview(fileVO, response);
 	}
 	
 	/**

@@ -17,9 +17,8 @@
              , TP.RGST_DT
              , TP.UPDT_DT
           FROM TB_POST TP
-         INNER JOIN TB_USER TU ON (TP.USER_ID = TU.USER_ID)
-         WHERE TP.BOARD_ID = #{boardId}
-           AND TP.DEL_YN = 'N'
+         INNER JOIN TB_USER TU ON (TP.USER_ID = TU.USER_ID) 
+          WHERE TP.DEL_YN = 'N'
          <choose>
             <when test=" 'postTtl'.equals(type) "> 
             AND TP.POST_TTL LIKE CONCAT('%', #{keyword}, '%')

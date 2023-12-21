@@ -33,6 +33,7 @@ public class PostServiceImpl implements PostService{
 	@Override
 //	@Transactional
 	public void insertPost(PostVO postVO, String userId, List<MultipartFile> files) {
+		System.out.println("ddddddddddddddddddddd: " + postVO);
 		postVO.setUserId(userId);
         postVO.setRgstId(userId);
         postVO.setPostId(generatePostId(userId));
