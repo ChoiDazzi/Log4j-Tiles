@@ -13,16 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +28,7 @@ import kr.letech.study.boot.board.service.PostService;
 import kr.letech.study.boot.board.vo.FileVO;
 import kr.letech.study.boot.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <pre>
@@ -44,6 +42,7 @@ import lombok.RequiredArgsConstructor;
  *  2023-12-19  CSY			최초 생성
  */
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -80,10 +79,8 @@ public class PostController {
 		Map<String, Object> postMap = new HashMap<>();
 		List<FileVO> files = fileService.getFileByPost(postId);
 		PostVO postInfo = postService.getPost(postId);
-		
 		postMap.put("postInfo", postInfo);
 		postMap.put("fileInfo", files);
-		System.out.println(files);
 		return ResponseEntity.ok(postMap);
 	}
 	
@@ -102,13 +99,13 @@ public class PostController {
 	 * @param postVO	수정할 게시글 내용
 	 * @param files		추가 업로드 파일
 	 */
-	@PutMapping(value = "/api/v1/posts", 
-				consumes = MediaType.MULTIPART_FORM_DATA_VALUE, 
-				produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping("/api/v1/posts")
 	public ResponseEntity<Void> modifyPost(@ModelAttribute PostVO postVO, 
-						   @RequestPart("multiUpload") List<MultipartFile> files,
-						   Principal principal) {
+								   @RequestPart("multiUpload") List<MultipartFile> files,
+								   Principal principal) {
 		String updtId = principal.getName();
+		log.info("postVO__________", postVO);
+		log.info("files__________", files);
 		postService.modifyPost(postVO, files, updtId);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
