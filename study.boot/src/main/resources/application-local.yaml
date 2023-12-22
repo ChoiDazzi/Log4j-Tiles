@@ -14,6 +14,10 @@ spring:
     url: jdbc:mariadb://localhost:3306/mydb
     username: myuser
     password: myuser
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 #mybatis
 mybatis:
@@ -23,7 +27,7 @@ mybatis:
 
 #file
 file:
-  directory: local/file
+  directory: d:/local/file
   
 # log 설정
 logging:
@@ -34,4 +38,5 @@ logging:
        type:
          descriptor:
            sql: trace
+
 

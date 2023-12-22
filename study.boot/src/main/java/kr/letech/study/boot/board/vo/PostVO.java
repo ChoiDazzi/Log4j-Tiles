@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Timestamp;
-import java.util.List;
-
 @Getter
 @Setter
 @ToString
@@ -21,5 +18,5 @@ public class PostVO {
     private String rgstId;		// 등록 아이디
     private String updtDt;		// 수정 일시
     private String updtId;		// 수정 아이디
-    private List<String> deleteFileIdList;	// 수정시 삭제할 파일 아이디 리스트
+//    private List<String> deleteFileIdList;	// 수정시 삭제할 파일 아이디 리스트
 }

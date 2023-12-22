@@ -16,6 +16,6 @@ public interface PostDAO {
 
     /* update */
     void modifyPost(PostVO postVO);
-    void deletePost(String postId);
+    void deletePost(String postId, String updtId);
     
 }

@@ -52,7 +52,7 @@ public class FileServiceImpl implements FileService{
                 file.transferTo(saveFile);
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            }
+            } 
             fileVO.setFileId(fileId);
             fileVO.setFileOrgNm(orgNm);
             fileVO.setFileSaveNm(saveNm);

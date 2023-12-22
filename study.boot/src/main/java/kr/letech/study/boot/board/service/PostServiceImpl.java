@@ -7,6 +7,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.letech.study.boot.board.dao.FileDAO;
 import kr.letech.study.boot.board.dao.PostDAO;
 import kr.letech.study.boot.board.vo.FileVO;
@@ -32,13 +35,16 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 //	@Transactional
-	public void insertPost(PostVO postVO, String userId, List<MultipartFile> files) {
-		System.out.println("ddddddddddddddddddddd: " + postVO);
-		postVO.setUserId(userId);
-        postVO.setRgstId(userId);
-        postVO.setPostId(generatePostId(userId));
-		postDao.insertPost(postVO);
-		String postId = postVO.getPostId();
+	public void insertPost(String postVO, String userId, List<MultipartFile> files) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		PostVO postVO2 = null;
+		try {
+			postVO2 = objectMapper.readValue(postVO, PostVO.class);
+			postVO2.setUserId(userId);
+	        postVO2.setRgstId(userId);
+	        postVO2.setPostId(generatePostId(userId));
+			postDao.insertPost(postVO2);
+		String postId = postVO2.getPostId();
 		if (files.get(0).getSize() != 0) {
 			List<FileVO> fileVOList = fileService.uploadFile(files);
 			for (FileVO fileVO : fileVOList) {
@@ -46,36 +52,48 @@ public class PostServiceImpl implements PostService{
 				fileVO.setPostId(postId);
 				fileDao.insertFile(fileVO);
 			}
+			} 
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
 	@Override
-	public void modifyPost(PostVO postVO, List<MultipartFile> files, String updtId) {
-		postVO.setUpdtId(updtId);
-		// 게시글 수정 
-		postDao.modifyPost(postVO);
-		// 파일 수정 - 파일 삭제 
-		List<String> deleteFileIdList = postVO.getDeleteFileIdList();
-		FileVO deleteFileVO = new FileVO();
-		deleteFileVO.setUpdtId(updtId);
-		for (String fileId : deleteFileIdList) {
-			deleteFileVO.setFileId(fileId);
-			fileService.deleteFIle(deleteFileVO);
-		}
-		if (files.get(0).getSize() != 0) {
-			// 파일 수정 - 파일 등록
-			List<FileVO> fileList = fileService.uploadFile(files);
-			for (FileVO fileVO : fileList) {
-				fileVO.setUpdtId(updtId);
-				fileVO.setPostId(postVO.getPostId());
-				fileService.insertFile(fileVO);
-			}	
-		}
+	public void modifyPost(String postVO, List<MultipartFile> files, String updtId) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		PostVO postVO2 = null;
+		try {
+			postVO2 = objectMapper.readValue(postVO, PostVO.class);
+			postVO2.setUpdtId(updtId);
+			// 게시글 수정 
+			postDao.modifyPost(postVO2);
+//			// 파일 수정 - 파일 삭제 
+//			List<String> deleteFileIdList = postVO.getDeleteFileIdList();
+//			FileVO deleteFileVO = new FileVO();
+//			deleteFileVO.setUpdtId(updtId);
+//			for (String fileId : deleteFileIdList) {
+//				deleteFileVO.setFileId(fileId);
+//				fileService.deleteFIle(deleteFileVO);
+//			}
+			if (files.get(0).getSize() != 0) {
+				// 파일 수정 - 파일 등록
+				List<FileVO> fileList = fileService.uploadFile(files);
+				for (FileVO fileVO : fileList) {
+					fileVO.setUpdtId(updtId);
+					fileVO.setPostId(postVO2.getPostId());
+					fileService.insertFile(fileVO);
+				}	
+			}
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
 	}
 
 	@Override
-	public void deletePost(String postId) {
-		postDao.deletePost(postId);
+	public void deletePost(String postId, String updtId) {
+		postDao.deletePost(postId, updtId);
 	}
 	
 	@Override

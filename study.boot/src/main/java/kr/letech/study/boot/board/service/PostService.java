@@ -13,10 +13,10 @@ public interface PostService {
 	String getCurrentTime();
 	
 	/* insert */
-	void insertPost(PostVO postVO, String userId, List<MultipartFile> files);
+	void insertPost(String postVO, String userId, List<MultipartFile> files);
 	
     /* update */
-    void modifyPost(PostVO postVO, List<MultipartFile> files, String userId);
-    void deletePost(String postId);
+    void modifyPost(String postVO, List<MultipartFile> files, String userId);
+    void deletePost(String postId, String updtId);
 }
 

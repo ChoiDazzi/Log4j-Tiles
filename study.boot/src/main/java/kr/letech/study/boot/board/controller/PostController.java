@@ -11,15 +11,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +26,6 @@ import kr.letech.study.boot.board.service.PostService;
 import kr.letech.study.boot.board.vo.FileVO;
 import kr.letech.study.boot.board.vo.PostVO;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * <pre>
@@ -42,7 +39,6 @@ import lombok.extern.slf4j.Slf4j;
  *  2023-12-19  CSY			최초 생성
  */
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -56,11 +52,9 @@ public class PostController {
 	 * @param files		등록할 파일 정보
 	 * @param principal
 	 */
-	@PostMapping(value = "/api/v1/posts", 
-				 consumes = MediaType.MULTIPART_FORM_DATA_VALUE, 
-				 produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> registerPost(PostVO postVO,
-										     @RequestPart("multiUpload") List<MultipartFile> files, 
+	@PostMapping("/api/v1/posts")
+	public ResponseEntity<Void> registerPost(@RequestParam("postVO") String postVO,
+										     @RequestParam("files") List<MultipartFile> files, 
 										     Principal principal) {
 		System.out.println("con-postVO__________" + postVO);
 		String userId = principal.getName();
@@ -100,12 +94,10 @@ public class PostController {
 	 * @param files		추가 업로드 파일
 	 */
 	@PutMapping("/api/v1/posts")
-	public ResponseEntity<Void> modifyPost(@ModelAttribute PostVO postVO, 
-								   @RequestPart("multiUpload") List<MultipartFile> files,
-								   Principal principal) {
+	public ResponseEntity<Void> modifyPost(@RequestParam("postVO") String postVO, 
+								   		   @RequestParam("files") List<MultipartFile> files,
+								   		   Principal principal) {
 		String updtId = principal.getName();
-		log.info("postVO__________", postVO);
-		log.info("files__________", files);
 		postService.modifyPost(postVO, files, updtId);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
@@ -114,9 +106,9 @@ public class PostController {
 	 * 게시글 삭제
 	 * @param postId	삭제할 게시글 아이디
 	 */
-	@DeleteMapping("/api/v1/posts")
-	public ResponseEntity<Void> deletePost(String postId) {
-		postService.deletePost(postId);
+	@DeleteMapping("/api/v1/posts/{postId}")
+	public ResponseEntity<Void> deletePost(@PathVariable String postId, Principal principal) {
+		postService.deletePost(postId, principal.getName());
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
