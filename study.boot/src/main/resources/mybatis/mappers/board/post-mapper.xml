@@ -40,7 +40,7 @@
                             , UPDT_ID
                             , DEL_YN)
         VALUES ( #{postId}
-               , #{boardId}
+               , 'b0009'
                , #{userId}
                , #{postTtl}
                , #{postCnt}
