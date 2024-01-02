@@ -27,7 +27,6 @@ public class SecurityConfig {
                 .antMatchers("/api/v1/**").permitAll()
                 .and()
                 .formLogin()
-                .loginProcessingUrl("/api/v1/users/login")
                 .usernameParameter("userId")
                 .passwordParameter("userPw")
                 .and()

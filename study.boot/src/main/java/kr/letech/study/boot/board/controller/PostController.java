@@ -56,7 +56,6 @@ public class PostController {
     public ResponseEntity<Void> registerPost(@RequestParam("postVO") String postVO,
                                              @RequestParam("files") List<MultipartFile> files,
                                              Principal principal) {
-        System.out.println("con-postVO__________" + postVO);
         String userId = principal.getName();
         postService.insertPost(postVO, userId, files);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -96,6 +95,8 @@ public class PostController {
     public ResponseEntity<Void> modifyPost(@RequestParam("postVO") String postVO,
                                            @RequestParam("files") List<MultipartFile> files,
                                            Principal principal) {
+    	System.out.println("postVO: " + postVO);
+    	System.out.println("files: " + files);
         String updtId = principal.getName();
         postService.modifyPost(postVO, files, updtId);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -109,6 +110,12 @@ public class PostController {
     public ResponseEntity<Void> deletePost(@PathVariable String postId, Principal principal) {
         postService.deletePost(postId, principal.getName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    @GetMapping("/api/v1/posts/{fileId}/download")
+    public ResponseEntity<Void> fileDownload(@PathVariable String fileId, HttpServletResponse response) {
+    	fileService.fileDownload(fileId, response);
+    	return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
