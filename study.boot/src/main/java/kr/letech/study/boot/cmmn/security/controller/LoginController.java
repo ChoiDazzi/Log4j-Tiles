@@ -42,8 +42,6 @@ public class LoginController {
 
     @PostMapping("/api/v1/users/login")
     public ResponseEntity<Void> login(@RequestParam String userId, @RequestParam String userPw) throws AuthenticationException {
-    	System.out.println("----" + userId);
-    	System.out.println("----" + userPw);
         // 인증을 위한 토큰 생성
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userId, userPw);
 		Authentication result = authenticationProvider.authenticate(authentication);
