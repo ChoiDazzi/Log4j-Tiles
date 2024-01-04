@@ -1,32 +1,38 @@
-#dev
+#local
 server:
   port: 8080
-  
+
+#pagehelper
+pagehelper:
+  helper-dialect: mariadb
+  reasonable: true
+
+#datasource
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
-# Data Source 설정
   datasource:
-    hikari:
-      jdbc-url: jdbc:h2:~/study
-      driver-class-name: org.h2.Driver
-      username: sa
-      password:
+    driver-class-name: org.mariadb.jdbc.Driver  
+    url: jdbc:mariadb://localhost:3306/mydb
+    username: myuser
+    password: myuser
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  thymeleaf:
+    prefix: classpath:/templates
+    sufix: .html
+    cache: false
+    check-template-location: true
 
-# JPA 설정
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
-        dialect: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: validate
-      #ddl-auto 주의 주의 또 주의...! 
+#mybatis
+mybatis:
+  mapper-locations: classpath:mybatis/mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+#file
+file:
+  directory: d:/local/file
 
 # log 설정
 logging:
@@ -37,4 +43,3 @@ logging:
        type:
          descriptor:
            sql: trace
-

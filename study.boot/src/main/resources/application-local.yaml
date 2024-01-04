@@ -32,7 +32,6 @@ mybatis:
 
 #file
 file:
-#  directory: /Users/ChoiSeoYeon/Desktop/letech/Board/local/file/
   directory: d:/local/file
 
 # log 설정
@@ -44,6 +43,3 @@ logging:
        type:
          descriptor:
            sql: trace
-
-
-

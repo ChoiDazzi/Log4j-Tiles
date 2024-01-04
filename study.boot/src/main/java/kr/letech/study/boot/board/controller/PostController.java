@@ -93,10 +93,8 @@ public class PostController {
      */
     @PutMapping("/api/v1/posts")
     public ResponseEntity<Void> modifyPost(@RequestParam("postVO") String postVO,
-                                           @RequestParam("files") List<MultipartFile> files,
+                                           @RequestParam(value = "files", required = false) List<MultipartFile> files,
                                            Principal principal) {
-    	System.out.println("postVO: " + postVO);
-    	System.out.println("files: " + files);
         String updtId = principal.getName();
         postService.modifyPost(postVO, files, updtId);
         return new ResponseEntity<>(HttpStatus.CREATED);

@@ -18,4 +18,5 @@ public class BoardVO {
 
     private String type;        // 검색 타입
     private String keyword;     // 검색 키워드
+    private int pageNum;
 }

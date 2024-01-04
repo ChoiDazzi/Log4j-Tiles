@@ -37,13 +37,10 @@ import lombok.extern.slf4j.Slf4j;
  *  ------------------------------------------------
  *  2023-12-18  CSY			최초 생성
  */
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class BoardController {
 	private final BoardService boardService;
-	private final PostService postService;
-	private final FileService fileService; 
 	
 	/**
 	 * 게시판에 따른 게시물 목록
@@ -54,13 +51,13 @@ public class BoardController {
 	 */
 //	@GetMapping("/api/v1/boards/{boardId}")
 	@GetMapping("/api/v1/boards")
-	public ResponseEntity<List<PostVO>> getBoard(/* @PathVariable String boardId, */
+	public ResponseEntity<PageInfo<PostVO>> getBoard(/* @PathVariable String boardId, */
 													 @RequestParam(defaultValue = "1") int pageNum,
 													 @RequestParam(defaultValue = "10") int pageSize,
 													 BoardVO boardVO) {
 		PageInfo<PostVO> pageInfo = boardService.getAllPostByBoard(boardVO, pageNum, pageSize);
-		List<PostVO> list = pageInfo.getList();
-		return ResponseEntity.ok(list);
+//		List<PostVO> list = pageInfo.getList();
+		return ResponseEntity.ok(pageInfo);
 	}
 	
 	/**

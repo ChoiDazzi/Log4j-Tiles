@@ -67,7 +67,7 @@ public class PostServiceImpl implements PostService{
 			postVO2.setUpdtId(updtId);
 			// 게시글 수정 
 			postDao.modifyPost(postVO2);
-			if (files.get(0).getSize() != 0) {
+			if (files != null) {
 				// 파일 수정 - 파일 등록
 				List<FileVO> fileList = fileService.uploadFile(files);
 				for (FileVO fileVO : fileList) {
