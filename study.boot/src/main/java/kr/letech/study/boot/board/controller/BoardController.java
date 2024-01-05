@@ -49,14 +49,11 @@ public class BoardController {
 	 * @param pageSize	게시판 페이지 사이즈
 	 * @return			게시글 목록
 	 */
-//	@GetMapping("/api/v1/boards/{boardId}")
 	@GetMapping("/api/v1/boards")
-	public ResponseEntity<PageInfo<PostVO>> getBoard(/* @PathVariable String boardId, */
-													 @RequestParam(defaultValue = "1") int pageNum,
+	public ResponseEntity<PageInfo<PostVO>> getBoard(@RequestParam(defaultValue = "1") int pageNum,
 													 @RequestParam(defaultValue = "10") int pageSize,
 													 BoardVO boardVO) {
 		PageInfo<PostVO> pageInfo = boardService.getAllPostByBoard(boardVO, pageNum, pageSize);
-//		List<PostVO> list = pageInfo.getList();
 		return ResponseEntity.ok(pageInfo);
 	}
 	
